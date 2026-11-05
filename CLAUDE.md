@@ -1,6 +1,6 @@
 # Gaveta Kids: instruções para o Claude
 
-Aplicação para alunos do 1.º ciclo (6 a 10 anos), usada no tablet, no computador e no quadro interativo. A autora é C. Sofia Oliveira. Toda a interface e documentação são em português de Portugal.
+Aplicação para alunos do 1.º ciclo (6 a 10 anos), usada no tablet, no computador e no quadro interativo. A autoria é CSO. Toda a interface e documentação são em português de Portugal.
 
 ## Regras
 
@@ -14,3 +14,4 @@ Aplicação para alunos do 1.º ciclo (6 a 10 anos), usada no tablet, no computa
 - Falar com a criança por «tu», com frases curtas e verbos no início. Dizer «Tenta outra vez», nunca «Errado».
 - As mascotes não se redesenham: usar só as imagens de `assets/mascotes/`.
 - Não recolher dados pessoais das crianças (RGPD).
+- O rodapé de tudo, site e jogos, é «CSO · Gaveta de Fichas», com ligação para gavetadefichas.wordpress.com. O nome completo da autora não aparece.

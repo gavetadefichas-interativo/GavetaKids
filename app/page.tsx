@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Rodape from "@/app/rodape";
 import Link from "next/link";
 import { anos } from "@/lib/anos";
 
@@ -29,7 +30,7 @@ export default function Entrada() {
         ))}
       </ul>
 
-      <footer className="rodape">Uma criação da Gaveta de Fichas.</footer>
+      <Rodape />
     </main>
   );
 }
