@@ -30,6 +30,12 @@ export default function Entrada() {
         ))}
       </ul>
 
+      <section aria-labelledby="professores-titulo" style={{ marginTop: "var(--espaco-6)", padding: "var(--espaco-4)", background: "var(--superficie)", borderRadius: "var(--raio-g)", boxShadow: "var(--sombra-cartao)" }}>
+        <h2 id="professores-titulo" className="titulo-2">Espaço do Professor</h2>
+        <p>Atividades por ano e disciplina, com orientações para a exploração pedagógica.</p>
+        <Link href="/professores/" className="botao">Consultar recursos para professores</Link>
+      </section>
+
       <Rodape />
     </main>
   );
