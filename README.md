@@ -12,6 +12,13 @@ Ferramentas interativas para alunos do 1.º ciclo, da Gaveta de Fichas. Cada ano
 - Os tipos de letra (Nunito e Andika) estão no projeto, em `app/fontes/`, com as respetivas licenças OFL.
 - As mascotes em `assets/mascotes/` são recortes da folha oficial das mascotes.
 
+## Jogos
+
+Os jogos já criados para a Gaveta de Fichas estão em `public/jogos/<pasta>/index.html`, tal como foram publicados. Cada um é uma página HTML completa. Para acrescentar um jogo:
+
+1. Copiar o ficheiro para `public/jogos/<nome-do-jogo>/index.html`.
+2. Juntar uma entrada a `lib/jogos.ts`, com o título, a descrição, o ano e a disciplina.
+
 ## Trabalhar no computador
 
 ```bash

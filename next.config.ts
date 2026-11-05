@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
   basePath,
   trailingSlash: true,
   images: { unoptimized: true },
+  // Os jogos em public/jogos/ são páginas HTML próprias: as ligações para eles precisam do caminho base.
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
 };
 
 export default nextConfig;

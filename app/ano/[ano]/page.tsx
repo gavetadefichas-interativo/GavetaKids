@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { anos, disciplinas, obterAno } from "@/lib/anos";
+import { enderecoJogo, jogosDe } from "@/lib/jogos";
 
 export const dynamicParams = false;
 
@@ -35,12 +36,28 @@ export default async function PaginaAno({ params }: { params: Promise<{ ano: str
 
       <h2 className="titulo-2">O que queres fazer hoje?</h2>
       <ul className="grelha-disciplinas" style={{ marginTop: "var(--espaco-4)" }}>
-        {disciplinas.map((d) => (
-          <li key={d} className="disciplina">
-            <h3 className="titulo-3">{d}</h3>
-            <span className="estado etiqueta">Em breve</span>
-          </li>
-        ))}
+        {disciplinas.map((d) => {
+          const lista = jogosDe(ano.numero, d);
+          return (
+            <li key={d} className="disciplina">
+              <h3 className="titulo-3">{d}</h3>
+              {lista.length === 0 ? (
+                <span className="estado etiqueta">Em breve</span>
+              ) : (
+                <ul className="lista-jogos">
+                  {lista.map((j) => (
+                    <li key={j.pasta}>
+                      <a href={enderecoJogo(j)} className="jogo">
+                        <span className="nome">{j.titulo}</span>
+                        <span className="descricao">{j.descricao}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
       </ul>
 
       <footer className="rodape">Uma criação da Gaveta de Fichas.</footer>

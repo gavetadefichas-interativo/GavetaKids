@@ -1,0 +1,171 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Exploradores do Outono</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700&display=swap">
+<style>
+/* Layout: ecrã único; barra superior (menu · título · nível · ajuda) e palco do jogo */
+:root{
+  --bg:#f6e7cf; --bg2:#efd3a8; --panel:#fffaf1; --ink:#3b2616; --muted:#7a5b41;
+  --accent:#c4561c; --accent2:#e59a2f; --ok:#4f7d2c; --okbg:#e3efcf; --bad:#b33a2b; --line:#e6cfae;
+  --display:"Baloo 2","Comic Sans MS",system-ui,sans-serif; --body:"Nunito",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#2a1d14; --bg2:#3a281a; --panel:#35261b; --ink:#f7e8d4; --muted:#c9ab8c;
+  --accent:#f08a4b; --accent2:#f2b35a; --ok:#9fcf6d; --okbg:#2f3b21; --bad:#f07a6a; --line:#4d3826; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#2a1d14; --bg2:#3a281a; --panel:#35261b; --ink:#f7e8d4; --muted:#c9ab8c;
+  --accent:#f08a4b; --accent2:#f2b35a; --ok:#9fcf6d; --okbg:#2f3b21; --bad:#f07a6a; --line:#4d3826; color-scheme:dark}
+html,body{height:100%}
+body{background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);font-family:var(--body);font-size:16px;padding-inline:16px;padding-block:12px;box-sizing:border-box;overflow:hidden;user-select:none;-webkit-user-select:none}
+#app{max-width:980px;margin:0 auto;height:100%;display:flex;flex-direction:column;gap:12px}
+button{font-family:var(--display);cursor:pointer;border:none}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:999px;padding:6px 16px;font-size:1rem;font-weight:700}
+.bar h1{font-family:var(--display);font-size:1.3rem;margin:0;line-height:1.1;flex:1;min-width:0}
+.bar h1 small{display:block;font-family:var(--body);font-size:.75rem;color:var(--muted);font-weight:500}
+.lvl{font-family:var(--display);font-size:.9rem;color:var(--muted);text-align:center}
+.dots{display:flex;gap:5px;justify-content:center;margin-top:2px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--ok)}
+.stage{flex:1;min-height:0;background:var(--panel);border:2px solid var(--line);border-radius:22px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:14px;box-sizing:border-box}
+.task{font-family:var(--display);font-size:clamp(1.2rem,3.5vw,1.8rem);font-weight:700;text-align:center;margin:0 0 6px;text-wrap:balance}
+.task b{color:var(--accent);font-size:1.3em}
+.toast{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:var(--okbg);color:var(--ok);font-family:var(--display);font-weight:700;padding:4px 16px;border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:5}
+.toast.show{opacity:1}
+/* Menu */
+.hero{text-align:center}
+.hero h2{font-family:var(--display);font-size:clamp(1.8rem,6vw,3rem);margin:4px 0 0;color:var(--accent);line-height:1}
+.hero p{color:var(--muted);margin:4px 0 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;margin-top:14px}
+.card{background:var(--bg);border:2px solid var(--line);border-radius:20px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink);transition:transform .15s}
+.card:hover{transform:translateY(-4px) rotate(-1deg)}
+.card .ic{font-size:3.4rem;line-height:1}
+.card strong{font-size:1.3rem}
+.card span{font-family:var(--body);font-size:.85rem;color:var(--muted)}
+@media (max-width:620px){.cards{grid-template-columns:1fr}.card{flex-direction:row;gap:12px;padding:10px 14px;text-align:left}.card .ic{font-size:2.4rem}}
+/* Folhas */
+.field{position:relative;flex:1;width:100%}
+.leaf{position:absolute;width:78px;height:78px;display:grid;place-items:center;font-size:60px;padding:0;background:none;touch-action:manipulation}
+.leaf span{position:absolute;font-family:var(--display);font-weight:800;font-size:28px;color:#fff;text-shadow:0 2px 3px rgba(60,25,5,.7)}
+.leaf.pop{animation:pop .35s forwards}
+.leaf.no{animation:shake .4s}
+@keyframes pop{to{transform:scale(1.8);opacity:0}}
+@keyframes shake{25%{translate:-8px}75%{translate:8px}}
+.helper{position:absolute;left:10px;bottom:6px;font-size:54px}
+/* Sombra */
+.shadow{width:min(200px,40vw);aspect-ratio:1;max-width:100%;background:var(--bg);border-radius:20px;display:grid;place-items:center;font-size:clamp(80px,18vw,130px);margin:6px 0 14px}
+.shadow span{filter:brightness(0);opacity:.85}
+.shadow.show span{filter:none;opacity:1;transition:filter .5s}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;max-width:560px}
+.opt{background:var(--bg);border:3px solid var(--line);border-radius:18px;aspect-ratio:1;font-size:clamp(40px,10vw,64px);display:grid;place-items:center;padding:0}
+.opt.no{animation:shake .4s;border-color:var(--bad)}
+.opt.yes{border-color:var(--ok);background:var(--okbg)}
+.name{font-family:var(--display);font-size:1.4rem;color:var(--ok);min-height:1.6em;margin-top:8px}
+/* Castanhas */
+.count{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:420px;font-size:clamp(34px,8vw,50px);margin:6px 0}
+.basket{width:130px;height:110px;max-width:100%;border:3px dashed var(--accent2);border-radius:20px;display:grid;place-items:center;font-family:var(--display);font-size:3rem;color:var(--muted);margin:6px 0 10px;background:var(--bg)}
+.basket.over{background:var(--okbg);border-color:var(--ok)}
+.nums{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.num{width:72px;height:72px;border-radius:18px;background:var(--accent2);color:#3b2616;font-family:var(--display);font-weight:800;font-size:2.4rem;display:grid;place-items:center;touch-action:none;cursor:grab;box-shadow:0 4px 0 var(--accent)}
+.num.drag{position:fixed;z-index:20;pointer-events:none;transform:scale(1.1)}
+.num.ghost{opacity:.3}
+/* Vitória */
+.win{position:absolute;inset:0;background:color-mix(in srgb,var(--bg) 70%,transparent);display:grid;place-items:center;z-index:10;padding:16px}
+.winbox{background:var(--panel);border:2px solid var(--line);border-radius:24px;padding:22px 26px;text-align:center;max-width:380px}
+.winbox small{font-family:var(--display);color:var(--ok);letter-spacing:.08em;text-transform:uppercase;font-size:.75rem}
+.winbox h3{font-family:var(--display);font-size:2rem;margin:0;color:var(--accent)}
+.winbox .big{font-size:4rem;animation:bob 1.2s infinite alternate}
+@keyframes bob{to{transform:translateY(-8px) rotate(8deg)}}
+.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.go{background:var(--ok);color:var(--panel);border-radius:999px;padding:8px 18px;font-size:1rem;font-weight:700}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app">
+  <div class="bar">
+    <button class="pill" id="bMenu">Menu</button>
+    <h1 id="title">Exploradores do Outono<small>1.º ano · letras, números e animais</small></h1>
+    <div id="lvlBox" hidden><div class="lvl" id="lvl">Nível 1 de 3</div><div class="dots" id="dots"></div></div>
+    <button class="pill" id="bHelp">Ajuda</button>
+  </div>
+  <div class="stage" id="stage"></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), stage=$('#stage');
+const rnd=n=>Math.floor(Math.random()*n), shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+let actx; function beep(ok){try{actx=actx||new AudioContext();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);
+ const f=ok?[523,659,784]:[220,196];f.forEach((fr,i)=>o.frequency.setValueAtTime(fr,actx.currentTime+i*.09));g.gain.setValueAtTime(.15,actx.currentTime);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+f.length*.1+.1);o.start();o.stop(actx.currentTime+f.length*.1+.12)}catch(e){}}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pt-PT';u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+function toast(t){let el=$('.toast');if(!el){el=document.createElement('div');el.className='toast';stage.appendChild(el)}el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1100)}
+const praise=['Muito bem!','Boa!','Excelente!','Isso mesmo!','Fantástico!'];
+
+let game=null, level=0, timer=null;
+function setBar(title,sub,steps,done){$('#title').innerHTML=`${title}<small>${sub}</small>`;$('#lvlBox').hidden=!steps;
+ if(steps){$('#lvl').textContent=`Nível ${level+1} de 3`;$('#dots').innerHTML=Array.from({length:steps},(_,i)=>`<i class="${i<done?'on':''}"></i>`).join('')}}
+function clear(){cancelAnimationFrame(timer);timer=null;stage.innerHTML=''}
+
+function menu(){game=null;clear();setBar('Exploradores do Outono','1.º ano · letras, números e animais',0);
+ stage.innerHTML=`<div class="hero"><div style="font-size:3rem">🍂🦔🍁</div><h2>Exploradores do Outono</h2><p>Escolhe um jogo para começar.</p></div>
+ <div class="cards">
+  <button class="card" data-g="folhas"><div class="ic">🍁</div><strong>Folhas das Letras</strong><span>Letras · apontar e tocar</span></button>
+  <button class="card" data-g="sombra"><div class="ic">🦉</div><strong>Sombras da Floresta</strong><span>Animais · observar e escolher</span></button>
+  <button class="card" data-g="castanhas"><div class="ic">🌰</div><strong>Conta as Castanhas</strong><span>Números · contar e arrastar</span></button>
+ </div>`;
+ stage.querySelectorAll('.card').forEach(b=>b.onclick=()=>start(b.dataset.g));}
+function start(g){game=GAMES[g];level=0;game.init()}
+function win(){clear();beep(true);say('Conseguiste!');const last=level>=2;
+ const d=document.createElement('div');d.className='win';d.innerHTML=`<div class="winbox"><small>Nível ${level+1} concluído</small><div class="big">🍁</div><h3>Conseguiste!</h3><p>${game.name}. ${last?'Completaste todos os níveis!':'Continua a descobrir, ao teu ritmo.'}</p>
+ <div class="row"><button class="pill" id="wM">Menu</button><button class="pill" id="wR">Repetir nível</button><button class="go" id="wN">${last?'Jogar outra vez':'Próximo nível →'}</button></div></div>`;
+ stage.appendChild(d);$('#wM').onclick=menu;$('#wR').onclick=()=>game.init();$('#wN').onclick=()=>{level=last?0:level+1;game.init()};$('#wN').focus()}
+
+const GAMES={
+/* 1 · Folhas das Letras */
+folhas:{name:'Folhas das Letras',help:'Toca só nas folhas que têm a letra pedida.',
+ init(){clear();const L=[['A','E','O'],['M','P','L','T'],['B','D','P','Q','R']][level];const target=L[rnd(L.length)],need=[3,5,6][level],speed=[.35,.5,.65][level];
+  let got=0;const draw=()=>setBar('Folhas das Letras','Letras · apontar · tocar',need,got);draw();
+  stage.innerHTML=`<p class="task">Toca nas folhas com a letra <b>${target}</b></p><div class="field" id="f"></div><div class="helper">🦔</div>`;
+  say('Toca nas folhas com a letra '+target);
+  const f=$('#f'),leaves=[],icons=['🍁','🍂','🍃'];let last=0;
+  const spawn=()=>{const W=f.clientWidth;const b=document.createElement('button');const good=Math.random()<.45;
+   const letter=good?target:shuf(L.filter(x=>x!==target))[0];b.className='leaf';b.innerHTML=`${icons[rnd(3)]}<span>${letter}</span>`;b.setAttribute('aria-label','Folha com a letra '+letter);
+   const o={el:b,x:rnd(Math.max(1,W-80)),y:-80,sw:Math.random()*6,good:letter===target,dead:false};b.style.left=o.x+'px';f.appendChild(b);leaves.push(o);
+   b.onpointerdown=()=>{if(o.dead)return;if(o.good){o.dead=true;b.classList.add('pop');beep(true);got++;draw();toast(praise[rnd(5)]);if(got>=need)setTimeout(win,450)}else{beep(false);b.classList.remove('no');void b.offsetWidth;b.classList.add('no');toast('Olha bem para a letra '+target)}}};
+  const loop=t=>{if(t-last>1300-level*200){spawn();last=t}const H=f.clientHeight;
+   leaves.forEach(o=>{if(o.dead)return;o.y+=speed*2;o.sw+=.03;o.el.style.transform=`translate(${Math.sin(o.sw)*20}px,${o.y}px) rotate(${Math.sin(o.sw)*25}deg)`;if(o.y>H){o.dead=true;o.el.remove()}});
+   timer=requestAnimationFrame(loop)};timer=requestAnimationFrame(loop)}},
+/* 2 · Sombras da Floresta */
+sombra:{name:'Sombras da Floresta',help:'Olha para a sombra e escolhe o animal com a mesma forma.',
+ init(){const A=[['🦔','ouriço'],['🐿️','esquilo'],['🦉','mocho'],['🦊','raposa'],['🐻','urso'],['🦌','veado'],['🐇','coelho'],['🐌','caracol'],['🐞','joaninha'],['🐢','tartaruga'],['🦡','texugo'],['🐦','pássaro']];
+  const rounds=3,nOpts=[3,4,4][level];let r=0;const pool=shuf(A);
+  const round=()=>{clear();setBar('Sombras da Floresta','Animais · observar · tocar',rounds,r);if(r>=rounds)return win();
+   const ans=pool[r+level*3%9]||pool[r];const opts=shuf([ans,...shuf(A.filter(a=>a!==ans)).slice(0,nOpts-1)]);
+   stage.innerHTML=`<p class="task">Qual é o animal desta sombra?</p><div class="shadow" id="sh"><span>${ans[0]}</span></div><div class="opts" style="grid-template-columns:repeat(${nOpts},1fr)">${opts.map((o,i)=>`<button class="opt" data-i="${i}" aria-label="${o[1]}">${o[0]}</button>`).join('')}</div><div class="name" id="nm"></div>`;
+   stage.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const o=opts[b.dataset.i];
+    if(o===ans){b.classList.add('yes');$('#sh').classList.add('show');$('#nm').textContent=`É o ${o[1]}!`.replace('o joaninha','a joaninha').replace('o raposa','a raposa').replace('o tartaruga','a tartaruga');beep(true);say($('#nm').textContent);r++;stage.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(round,1500)}
+    else{beep(false);b.classList.remove('no');void b.offsetWidth;b.classList.add('no');toast('Olha para a forma com atenção')}})};
+  round()}},
+/* 3 · Conta as Castanhas */
+castanhas:{name:'Conta as Castanhas',help:'Conta os objetos e arrasta o número certo para o cesto.',
+ init(){const max=[5,8,10][level],rounds=3,items=['🌰','🍄','🍎','🍂','🎃'];let r=0;
+  const round=()=>{clear();setBar('Conta as Castanhas','Números · contar · arrastar',rounds,r);if(r>=rounds)return win();
+   const n=1+rnd(max),it=items[rnd(items.length)];const choices=new Set([n]);while(choices.size<Math.min(4,max))choices.add(1+rnd(max));
+   stage.innerHTML=`<p class="task">Quantos há? Arrasta o número para o cesto.</p><div class="count">${Array(n).fill(it).join('<span></span>')}</div><div class="basket" id="bk" aria-label="Cesto">🧺</div><div class="nums">${shuf([...choices]).map(v=>`<button class="num" data-v="${v}">${v}</button>`).join('')}</div>`;
+   const bk=$('#bk');
+   stage.querySelectorAll('.num').forEach(b=>{
+    const drop=v=>{if(+v===n){bk.textContent=n;bk.classList.add('over');beep(true);say('Muito bem, são '+n);toast(praise[rnd(5)]);r++;setTimeout(round,1400)}else{beep(false);toast('Conta outra vez, devagar')}};
+    b.onclick=e=>{if(b._dragged){b._dragged=false;return}};
+    b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();drop(b.dataset.v)}};
+    b.onpointerdown=e=>{e.preventDefault();const c=b.cloneNode(true);c.classList.add('drag');document.body.appendChild(c);b.classList.add('ghost');
+     const mv=ev=>{c.style.left=ev.clientX-36+'px';c.style.top=ev.clientY-36+'px';const R=bk.getBoundingClientRect();bk.classList.toggle('over',ev.clientX>R.left&&ev.clientX<R.right&&ev.clientY>R.top&&ev.clientY<R.bottom)};mv(e);
+     const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);c.remove();b.classList.remove('ghost');const R=bk.getBoundingClientRect();bk.classList.remove('over');
+      if(ev.clientX>R.left&&ev.clientX<R.right&&ev.clientY>R.top&&ev.clientY<R.bottom)drop(b.dataset.v)};
+     addEventListener('pointermove',mv);addEventListener('pointerup',up)}})};
+  round()}}
+};
+$('#bMenu').onclick=menu;
+$('#bHelp').onclick=()=>{const t=game?game.help:'Escolhe um dos três jogos. Em cada jogo há três níveis.';toast(t);say(t)};
+menu();
+</script>
+
+</body></html>

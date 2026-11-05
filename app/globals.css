@@ -128,7 +128,7 @@ a { color: inherit; }
   padding: 0;
   display: grid;
   gap: var(--espaco-3);
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 .disciplina {
   min-height: calc(var(--alvo-toque) * 2);
@@ -142,6 +142,28 @@ a { color: inherit; }
   gap: var(--espaco-2);
 }
 .disciplina .estado { color: var(--tinta-suave); }
+.disciplina { justify-content: flex-start; }
+
+.lista-jogos { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--espaco-2); }
+.jogo {
+  display: block;
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-m);
+  background: var(--ano-claro);
+  text-decoration: none;
+  box-shadow: var(--sombra-botao);
+}
+.jogo:active { transform: translateY(4px); box-shadow: none; }
+.jogo .nome {
+  display: block;
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--ano-cor-texto);
+}
+.jogo .descricao { display: block; margin-top: var(--espaco-1); font-size: 16px; line-height: 22px; color: var(--tinta-suave); }
 
 /* Botões */
 .botao {

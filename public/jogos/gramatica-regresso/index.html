@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gramática no Regresso à Escola — Revisão 3.º ano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mega:#E85A4F; --mega-esc:#C94439; --creme:#FFF8F0; --papel:#FFFFFF; --tinta:#2F2A3A; --suave:#6D6577;
+  --nome:#5BA3D0; --det:#FFC857; --adj:#6BBF59; --verbo:#E85A4F; --laranja:#E8834A;
+  --linha:#F1E4D6; --ok:#4E9E3E; --erro:#D94B4B;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --creme:#221E2A; --papel:#2E2938; --tinta:#F4EEF8; --suave:#BDB3C9; --linha:#3E3749; } }
+:root[data-theme="dark"]{ --creme:#221E2A; --papel:#2E2938; --tinta:#F4EEF8; --suave:#BDB3C9; --linha:#3E3749; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--tinta);font-family:Nunito,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3,button,.tok,.balao,.caixa{font-family:Fredoka,Nunito,"Segoe UI",sans-serif}
+button{cursor:pointer;border:none;font-size:1rem}
+button:focus-visible,.tok:focus-visible{outline:3px solid var(--nome);outline-offset:2px}
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--mega);color:#fff}
+header h1{font-size:1.25rem;margin:0;flex:1;font-weight:600}
+header .estrelas{font-weight:600;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px}
+.icon-btn{background:rgba(255,255,255,.22);color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem}
+main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:18px}
+.ecra{display:none}.ecra.ativo{display:block}
+.btn{background:var(--mega);color:#fff;padding:12px 26px;border-radius:14px;font-size:1.15rem;font-weight:600;box-shadow:0 4px 0 var(--mega-esc)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--mega-esc)}
+.btn.sec{background:var(--papel);color:var(--tinta);box-shadow:0 4px 0 var(--linha);border:2px solid var(--linha)}
+.fala{display:flex;gap:14px;align-items:center;margin:8px 0 18px}
+.fala svg{flex:0 0 auto}
+.balaofala{background:var(--papel);border:2px solid var(--linha);border-radius:18px;padding:12px 16px;position:relative;flex:1}
+.balaofala:before{content:"";position:absolute;left:-12px;top:22px;border:10px solid transparent;border-right-color:var(--linha)}
+.ouvir{background:var(--nome);color:#fff;border-radius:10px;padding:4px 10px;margin-left:6px;font-size:.9rem}
+/* Início */
+.capa{text-align:center;padding:20px 0}
+.capa h2{font-size:clamp(2rem,6vw,3.2rem);margin:.2em 0;line-height:1.1;color:var(--mega)}
+.capa p{color:var(--suave);max-width:560px;margin:0 auto 18px}
+.legenda{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0}
+.etq{padding:4px 14px;border-radius:8px;font-family:Fredoka,sans-serif;font-weight:500;color:#2F2A3A}
+.etq.n{background:var(--nome);color:#fff}.etq.d{background:var(--det)}.etq.a{background:var(--adj);color:#fff}.etq.v{background:var(--verbo);color:#fff}
+/* Mapa */
+.mapa{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.passo{background:var(--papel);border:2px solid var(--linha);border-radius:16px;padding:14px;text-align:left;color:var(--tinta);display:flex;flex-direction:column;gap:4px;min-height:130px}
+.passo .num{font-family:Fredoka;font-size:1.6rem;font-weight:700;color:var(--mega);line-height:1}
+.passo b{font-family:Fredoka;font-size:1.15rem;font-weight:600}
+.passo small{color:var(--suave);font-family:Nunito}
+.passo .st{margin-top:auto;letter-spacing:2px;color:var(--det)}
+.passo:hover{border-color:var(--mega)}
+/* Texto */
+.folha{background:var(--papel);border-radius:6px;padding:26px 30px;border-left:4px solid var(--mega);background-image:repeating-linear-gradient(transparent,transparent 35px,var(--linha) 35px,var(--linha) 36px);line-height:36px;max-width:760px;margin:0 auto}
+.folha h3{margin:0 0 10px;font-size:1.6rem;line-height:36px;text-align:center}
+.folha p{margin:0 0 36px;text-indent:1.5em}
+/* Tokens */
+.frase-jogo{background:var(--papel);border:2px solid var(--linha);border-radius:16px;padding:18px 20px;font-size:1.3rem;line-height:2.4}
+.tok{display:inline-block;padding:0 6px;border-radius:8px;cursor:pointer;border:2px solid transparent;user-select:none;line-height:1.6}
+.tok:hover{background:var(--linha)}
+.tok.sel{background:var(--det);color:#2F2A3A}
+.tok.ok{background:var(--ok);color:#fff}
+.tok.errado{background:var(--erro);color:#fff;text-decoration:line-through}
+.tok.falhou{border:2px dashed var(--ok)}
+.barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:14px 0}
+.info{color:var(--suave);font-weight:700}
+/* Caixas */
+.banco{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:60px;margin:10px 0 18px}
+.ficha{background:var(--papel);border:2px solid var(--tinta);color:var(--tinta);border-radius:10px;padding:8px 16px;font-size:1.2rem;font-weight:500}
+.ficha.sel{background:var(--det);color:#2F2A3A;transform:translateY(-4px)}
+.ficha.abana{animation:abana .4s}
+@keyframes abana{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.caixas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.caixa{border-radius:16px;padding:10px;min-height:150px;border:3px solid;background:var(--papel);text-align:left}
+.caixa h3{margin:0 0 6px;font-size:1.1rem;font-weight:600}
+.caixa .dentro{display:flex;flex-wrap:wrap;gap:6px}
+.caixa .dentro span{padding:2px 10px;border-radius:8px;font-family:Fredoka;color:#fff;font-size:1rem}
+.caixa.n{border-color:var(--nome)}.caixa.n span{background:var(--nome)}
+.caixa.d{border-color:var(--det)}.caixa.d span{background:var(--det);color:#2F2A3A}
+.caixa.a{border-color:var(--adj)}.caixa.a span{background:var(--adj)}
+.caixa.v{border-color:var(--verbo)}.caixa.v span{background:var(--verbo)}
+/* Balões */
+.ceu{position:relative;height:min(62vh,520px);border-radius:18px;overflow:hidden;background:linear-gradient(#BFE3F7,#EAF6FD);border:2px solid var(--linha)}
+.balao{position:absolute;bottom:-110px;width:112px;height:128px;border-radius:50% 50% 48% 48%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.15rem;font-weight:600;text-align:center;padding:6px;box-shadow:inset -10px -12px 0 rgba(0,0,0,.08);animation:sobe linear forwards}
+.balao:after{content:"";position:absolute;bottom:-26px;left:50%;width:2px;height:26px;background:rgba(0,0,0,.3)}
+.balao.rebentou{animation:rebenta .3s forwards!important}
+.balao.mal{animation-play-state:paused;filter:grayscale(1)}
+@keyframes sobe{to{transform:translateY(calc(-1 * min(62vh,520px) - 150px))}}
+@keyframes rebenta{to{transform:scale(1.6);opacity:0}}
+/* Escolhas */
+.pergunta{background:var(--papel);border:2px solid var(--linha);border-radius:16px;padding:20px;font-size:1.35rem;text-align:center}
+.pergunta .alvo{background:var(--det);color:#2F2A3A;padding:0 8px;border-radius:8px;font-weight:700}
+.pergunta .pista{display:block;color:var(--suave);font-size:1rem;margin-top:8px}
+.opcoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
+.opcao{background:var(--papel);border:3px solid var(--linha);color:var(--tinta);padding:14px;border-radius:14px;font-size:1.2rem;font-weight:500}
+.opcao:hover{border-color:var(--mega)}
+.opcao.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.opcao.errado{background:var(--erro);border-color:var(--erro);color:#fff}
+.dica{background:var(--papel);border:2px dashed var(--linha);border-radius:12px;padding:10px 14px;font-size:.95rem;color:var(--suave)}
+.progresso{height:10px;background:var(--linha);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+.progresso div{height:100%;background:var(--mega);transition:width .3s}
+.feedback{min-height:32px;text-align:center;font-weight:800;font-size:1.1rem}
+.feedback.ok{color:var(--ok)}.feedback.errado{color:var(--erro)}
+/* Resultado */
+.resultado{text-align:center;padding:30px 0}
+.resultado .grandes{font-size:3.4rem;letter-spacing:6px;color:var(--det)}
+.diploma{background:var(--papel);border:6px double var(--mega);border-radius:18px;padding:30px;max-width:640px;margin:10px auto;text-align:center}
+.diploma input{font:inherit;font-size:1.4rem;text-align:center;border:none;border-bottom:2px solid var(--tinta);background:transparent;color:var(--tinta);width:80%;padding:4px}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.ativo{display:flex}
+.modal .caixa-m{background:var(--papel);border-radius:18px;padding:22px;max-width:440px;width:100%}
+.modal input{font:inherit;width:100%;padding:10px;border-radius:10px;border:2px solid var(--linha);margin:8px 0;background:var(--creme);color:var(--tinta)}
+.modal .saltos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.confete{position:fixed;top:-20px;width:10px;height:14px;z-index:60;animation:cai 2.4s linear forwards}
+@keyframes cai{to{transform:translateY(105vh) rotate(720deg)}}
+footer{text-align:center;font-size:.85rem;color:var(--suave);padding:14px}
+footer a{color:var(--mega)}
+@media (prefers-reduced-motion:reduce){.confete{display:none}.btn:active{transform:none}}
+@media print{header,footer,.nao-imprimir{display:none!important}body{background:#fff}}
+@media (max-width:600px){.folha{padding:18px}.frase-jogo{font-size:1.1rem}.balao{width:92px;height:106px;font-size:1rem}}
+</style>
+</head>
+<body>
+<header>
+  <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true"><use href="#mega"/></svg>
+  <h1>Gramática no regresso à escola</h1>
+  <span class="estrelas" id="totalEstrelas">★ 0</span>
+  <button class="icon-btn" id="btnCasa" title="Mapa dos jogos" aria-label="Mapa dos jogos">⌂</button>
+  <button class="icon-btn" id="btnSom" title="Som" aria-label="Ligar ou desligar o som">🔈</button>
+  <button class="icon-btn" id="btnProf" title="Painel do professor" aria-label="Painel do professor">🔑</button>
+</header>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="mega" viewBox="0 0 100 100">
+    <line x1="50" y1="4" x2="50" y2="18" stroke="#6D6577" stroke-width="4"/>
+    <circle cx="50" cy="6" r="6" fill="#FFC857"/>
+    <rect x="16" y="18" width="68" height="54" rx="18" fill="#E85A4F"/>
+    <rect x="26" y="28" width="48" height="30" rx="12" fill="#FFF8F0"/>
+    <circle cx="40" cy="42" r="6" fill="#2F2A3A"/><circle cx="60" cy="42" r="6" fill="#2F2A3A"/>
+    <circle cx="42" cy="40" r="2" fill="#fff"/><circle cx="62" cy="40" r="2" fill="#fff"/>
+    <path d="M42 51 Q50 57 58 51" stroke="#2F2A3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <rect x="8" y="36" width="8" height="18" rx="4" fill="#C94439"/><rect x="84" y="36" width="8" height="18" rx="4" fill="#C94439"/>
+    <rect x="30" y="74" width="40" height="22" rx="8" fill="#C94439"/>
+    <text x="50" y="91" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="16" font-weight="700" fill="#fff">M</text>
+  </symbol>
+</svg>
+
+<main>
+  <!-- INÍCIO -->
+  <section class="ecra ativo" id="ecraInicio">
+    <div class="capa">
+      <svg width="150" height="150" viewBox="0 0 100 100" aria-hidden="true"><use href="#mega"/></svg>
+      <h2>Gramática no regresso à escola</h2>
+      <p>Revisão do 3.º ano com o Mega: classes de palavras e tempos verbais do modo indicativo, a partir do texto «O regresso à escola».</p>
+      <div class="legenda">
+        <span class="etq n">nomes</span><span class="etq d">determinantes artigos</span><span class="etq a">adjetivos</span><span class="etq v">verbos</span>
+      </div>
+      <button class="btn" id="btnComecar">Começar</button>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <section class="ecra" id="ecraMapa">
+    <div class="fala">
+      <svg width="70" height="70" viewBox="0 0 100 100" aria-hidden="true"><use href="#mega"/></svg>
+      <div class="balaofala">Começa por ler o texto. Depois joga pela ordem que quiseres. Ganha até 3 estrelas em cada jogo! <button class="ouvir" data-ler="Começa por ler o texto. Depois joga pela ordem que quiseres. Ganha até três estrelas em cada jogo!">🔊 Ouvir</button></div>
+    </div>
+    <div class="mapa" id="mapa"></div>
+  </section>
+
+  <!-- TEXTO -->
+  <section class="ecra" id="ecraTexto">
+    <div class="barra nao-imprimir">
+      <span class="info">Lê o texto com atenção. Vais precisar dele nos jogos.</span>
+      <button class="btn sec" id="btnLerTexto">🔊 Ouvir o texto</button>
+    </div>
+    <div class="folha" id="folhaTexto"></div>
+    <div class="barra nao-imprimir" style="justify-content:center"><button class="btn" id="btnTextoFeito">Já li o texto</button></div>
+  </section>
+
+  <!-- JOGO -->
+  <section class="ecra" id="ecraJogo">
+    <div class="fala">
+      <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true"><use href="#mega"/></svg>
+      <div class="balaofala"><span id="instrucao"></span> <button class="ouvir" id="btnOuvirInstrucao">🔊 Ouvir</button></div>
+    </div>
+    <div id="areaJogo"></div>
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="ecra" id="ecraResultado">
+    <div class="resultado">
+      <svg width="120" height="120" viewBox="0 0 100 100" aria-hidden="true"><use href="#mega"/></svg>
+      <h2 id="resTitulo">Muito bem!</h2>
+      <div class="grandes" id="resEstrelas">★★★</div>
+      <p id="resTexto"></p>
+      <div class="barra" style="justify-content:center">
+        <button class="btn sec" id="btnRepetir">Jogar outra vez</button>
+        <button class="btn" id="btnVoltarMapa">Voltar ao mapa</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIPLOMA -->
+  <section class="ecra" id="ecraDiploma">
+    <div class="diploma">
+      <svg width="90" height="90" viewBox="0 0 100 100" aria-hidden="true"><use href="#mega"/></svg>
+      <h2 style="color:var(--mega);margin:.2em 0">Diploma de revisão</h2>
+      <p>Certifica-se que</p>
+      <input id="nomeAluno" placeholder="Escreve o teu nome" aria-label="Nome do aluno">
+      <p>reviu as classes de palavras e os tempos verbais do 3.º ano<br>e conquistou <b id="dipEstrelas">0</b> estrelas.</p>
+      <p style="font-size:.9rem;color:var(--suave)" id="dipData"></p>
+    </div>
+    <div class="barra nao-imprimir" style="justify-content:center">
+      <button class="btn sec" onclick="window.print()">Imprimir diploma</button>
+      <button class="btn" id="btnDipMapa">Voltar ao mapa</button>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="modalProf" role="dialog" aria-modal="true" aria-labelledby="tituloProf">
+  <div class="caixa-m">
+    <h2 id="tituloProf" style="margin-top:0">Painel do professor</h2>
+    <div id="profLogin">
+      <label for="passeProf">Palavra-passe</label>
+      <input type="password" id="passeProf">
+      <p class="feedback errado" id="profErro"></p>
+      <div class="barra"><button class="btn sec" data-fechar>Fechar</button><button class="btn" id="btnEntrarProf">Entrar</button></div>
+    </div>
+    <div id="profPainel" style="display:none">
+      <p class="info">Ir diretamente para:</p>
+      <div class="saltos" id="saltos"></div>
+      <div class="barra">
+        <button class="btn sec" id="btnReset">Apagar progresso</button>
+        <button class="btn" data-fechar>Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Criado por C. Sofia Oliveira ·
+  <a href="https://gavetadefichas.wordpress.com" target="_blank" rel="noopener">gavetadefichas.wordpress.com</a> ·
+  <a href="https://gavetadefichas.blogspot.com" target="_blank" rel="noopener">gavetadefichas.blogspot.com</a>
+</footer>
+
+<script>
+"use strict";
+/* ================= DADOS ================= */
+const TITULO = "O regresso à escola";
+// [n|nome] [d|artigo] [a|adjetivo] [v|verbo]
+const TEXTO = [
+ "Durante [d|as] [n|férias] de [n|verão], [d|a] [n|Rita] [v|passeava] muitas [n|vezes] junto ao [n|mar] com [d|o] [n|avô]. [d|O] [n|sol] [v|brilhava] no [n|céu], [d|a] [n|água] [v|estava] [a|calma] e [d|os] dois [v|aproveitavam] para [v|conversar] enquanto [v|caminhavam] pela [n|areia].",
+ "Ontem, [d|a] [n|Rita] [v|acordou] mais cedo do que o habitual. [v|Vestiu] [d|uma] [n|camisola] [a|nova], [v|tomou] [d|o] [n|pequeno-almoço] e [v|preparou]-se para [v|regressar] à [n|escola]. [d|A] [n|mãe] [v|fez]-lhe [d|um] [n|lanche] [a|delicioso] e [v|colocou]-o cuidadosamente na [n|mochila] [a|azul].",
+ "Quando [v|chegou] à [n|escola], [v|encontrou] [d|os] [n|amigos] no [n|recreio]. Todos [v|tinham] [n|novidades] para [v|contar]! [d|O] [n|Tomás] [v|partilhou] [d|uma] [n|história] [a|divertida] sobre [d|as] [n|férias] e [d|o] [n|grupo] não [v|conseguiu] [v|parar] de [v|rir].",
+ "Hoje, [d|a] [n|professora] [v|apresenta] [d|os] [a|novos] [n|livros] e [v|explica] algumas das [n|atividades] que [v|vão] [v|realizar] no 4.º [n|ano]. [d|A] [n|sala] [v|está] [a|organizada], [a|luminosa] e [a|cheia] de [n|materiais] [a|interessantes]. [d|A] [n|Rita] [v|sente]-se [a|curiosa] e [a|entusiasmada] com tudo o que [v|vai] [v|aprender].",
+ "Amanhã, [d|a] [n|turma] [v|visita] [d|a] [n|biblioteca] da [n|escola]. Cada [n|aluno] [v|pode] [v|escolher] [d|um] [n|livro] para [v|levar] para [d|a] [n|sala] e [v|começar] [d|uma] [a|nova] [n|aventura] de [n|leitura].",
+ "[d|A] [n|Rita] [v|sorri] e [v|pensa]: «Este [n|ano] [v|vai] [v|ser] [a|fantástico]!»"
+];
+const CLASSES = {n:"Nome", d:"Determinante artigo", a:"Adjetivo", v:"Verbo"};
+const PLURAL = {n:"nomes", d:"determinantes artigos", a:"adjetivos", v:"verbos"};
+
+const TEMPOS = {pres:"Presente", perf:"Pretérito perfeito", imp:"Pretérito imperfeito"};
+const FRASES_TEMPO = [
+ {f:"A Rita [passeava] junto ao mar com o avô.", t:"imp"},
+ {f:"O sol [brilhava] no céu.", t:"imp"},
+ {f:"A água [estava] calma.", t:"imp"},
+ {f:"Os dois [caminhavam] pela areia.", t:"imp"},
+ {f:"Todos [tinham] novidades para contar.", t:"imp"},
+ {f:"A Rita [acordou] mais cedo do que o habitual.", t:"perf"},
+ {f:"[Vestiu] uma camisola nova.", t:"perf"},
+ {f:"A mãe [fez]-lhe um lanche delicioso.", t:"perf"},
+ {f:"[Encontrou] os amigos no recreio.", t:"perf"},
+ {f:"O Tomás [partilhou] uma história divertida.", t:"perf"},
+ {f:"A professora [apresenta] os novos livros.", t:"pres"},
+ {f:"A sala [está] organizada e luminosa.", t:"pres"},
+ {f:"A Rita [sente]-se curiosa e entusiasmada.", t:"pres"},
+ {f:"A turma [visita] a biblioteca da escola.", t:"pres"},
+ {f:"A Rita [sorri] e pensa no novo ano.", t:"pres"}
+];
+const CONJUGAR = [
+ {s:"Eu ___ a mochila para a escola.", i:"arrumar", f:{pres:"arrumo",perf:"arrumei",imp:"arrumava"}},
+ {s:"Tu ___ os amigos no recreio.", i:"encontrar", f:{pres:"encontras",perf:"encontraste",imp:"encontravas"}},
+ {s:"A professora ___ os livros novos.", i:"mostrar", f:{pres:"mostra",perf:"mostrou",imp:"mostrava"}},
+ {s:"Nós ___ à biblioteca da escola.", i:"ir", f:{pres:"vamos",perf:"fomos",imp:"íamos"}},
+ {s:"Eles ___ muito no intervalo.", i:"correr", f:{pres:"correm",perf:"correram",imp:"corriam"}},
+ {s:"A Rita ___ uma camisola nova.", i:"vestir", f:{pres:"veste",perf:"vestiu",imp:"vestia"}},
+ {s:"Eu ___ um lanche delicioso.", i:"comer", f:{pres:"como",perf:"comi",imp:"comia"}},
+ {s:"Os alunos ___ felizes.", i:"estar", f:{pres:"estão",perf:"estiveram",imp:"estavam"}},
+ {s:"Tu ___ uma história divertida.", i:"contar", f:{pres:"contas",perf:"contaste",imp:"contavas"}},
+ {s:"O avô ___ a Rita à escola.", i:"levar", f:{pres:"leva",perf:"levou",imp:"levava"}},
+ {s:"Eu ___ muito cedo.", i:"acordar", f:{pres:"acordo",perf:"acordei",imp:"acordava"}},
+ {s:"Nós ___ muitos amigos na turma.", i:"ter", f:{pres:"temos",perf:"tivemos",imp:"tínhamos"}},
+ {s:"A turma ___ um livro novo.", i:"escolher", f:{pres:"escolhe",perf:"escolheu",imp:"escolhia"}},
+ {s:"Eles ___ felizes nas férias.", i:"ser", f:{pres:"são",perf:"foram",imp:"eram"}}
+];
+
+const JOGOS = [
+ {id:"texto", nome:"Ler o texto", desc:"«O regresso à escola»"},
+ {id:"caca", nome:"Caça às palavras", desc:"Encontra nomes, artigos, adjetivos e verbos no texto"},
+ {id:"caixas", nome:"Cada palavra na sua caixa", desc:"Arruma as palavras por classe"},
+ {id:"baloes", nome:"Balões das palavras", desc:"Rebenta só os balões certos"},
+ {id:"tempos", nome:"Detetive dos tempos", desc:"Presente, pretérito perfeito ou imperfeito?"},
+ {id:"conjugar", nome:"Completa a frase", desc:"Escolhe a forma verbal correta"},
+ {id:"final", nome:"Desafio final", desc:"Perguntas de tudo um pouco e diploma"}
+];
+
+/* ================= UTILITÁRIOS ================= */
+const $ = s => document.querySelector(s);
+const baralhar = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const CHAVE = "gaveta_gramatica_regresso_3ano";
+let estado = {estrelas:{}, som:true};
+try { const g = localStorage.getItem(CHAVE); if (g) estado = Object.assign(estado, JSON.parse(g)); } catch(e){}
+function guardar(){ try{ localStorage.setItem(CHAVE, JSON.stringify(estado)); }catch(e){} }
+
+let timers = [];
+function trackedTimeout(fn, ms){ const t = setTimeout(fn, ms); timers.push(t); return t; }
+function trackedInterval(fn, ms){ const t = setInterval(fn, ms); timers.push(t); return t; }
+function limparTimers(){ timers.forEach(t => { clearTimeout(t); clearInterval(t); }); timers = []; }
+
+function parse(p){
+  const out = []; const re = /\[(\w)\|([^\]]+)\]/g; let last = 0, m;
+  while ((m = re.exec(p))) { simples(p.slice(last, m.index), out); out.push({w:m[2], c:m[1]}); last = re.lastIndex; }
+  simples(p.slice(last), out); return out;
+}
+function simples(s, out){
+  s.split(/(\s+)/).forEach(ch => {
+    if (!ch) return;
+    if (/^\s+$/.test(ch)) { out.push({p:ch}); return; }
+    const mm = ch.match(/^([^A-Za-zÀ-ÿ0-9]*)([A-Za-zÀ-ÿ0-9.º-]*[A-Za-zÀ-ÿ0-9º])?(.*)$/);
+    if (!mm) { out.push({p:ch}); return; }
+    if (mm[1]) out.push({p:mm[1]});
+    if (mm[2]) out.push({w:mm[2], c:null});
+    if (mm[3]) out.push({p:mm[3]});
+  });
+}
+const limpo = p => p.replace(/\[\w\|([^\]]+)\]/g, "$1");
+
+// Banco de palavras por classe (sem repetições, em minúsculas exceto nomes próprios)
+const BANCO = {n:new Set(), d:new Set(), a:new Set(), v:new Set()};
+TEXTO.forEach(p => parse(p).forEach(t => { if (t.c) {
+  let w = t.w; if (t.c !== "n" || !["Rita","Tomás"].includes(w)) w = w.toLowerCase();
+  BANCO[t.c].add(w);
+}}));
+["vão","vai"].forEach(w => BANCO.v.delete(w)); // evita formas de perífrase isoladas
+BANCO.d.delete("a"); BANCO.d.delete("o");     // ambíguas fora do contexto nos jogos sem frase
+const banco = c => [...BANCO[c]];
+
+/* ================= SOM E VOZ ================= */
+let actx = null;
+function som(tipo){
+  if (!estado.som) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const notas = tipo === "ok" ? [660, 880] : tipo === "fim" ? [523,659,784,1046] : [220, 180];
+    notas.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = tipo === "erro" ? "square" : "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(0.12, actx.currentTime + i*0.1);
+      g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + i*0.1 + 0.18);
+      o.connect(g); g.connect(actx.destination); o.start(actx.currentTime + i*0.1); o.stop(actx.currentTime + i*0.1 + 0.2);
+    });
+  } catch(e){}
+}
+let vozPT = null;
+function carregarVozes(){ const v = speechSynthesis.getVoices(); vozPT = v.find(x => x.lang === "pt-PT") || v.find(x => x.lang && x.lang.startsWith("pt")) || null; }
+if ("speechSynthesis" in window) { carregarVozes(); speechSynthesis.onvoiceschanged = carregarVozes; }
+function falar(txt){
+  if (!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const partes = txt.match(/[^.!?]+[.!?»]*/g) || [txt];
+  partes.forEach(pt => { const u = new SpeechSynthesisUtterance(pt.trim()); u.lang = "pt-PT"; if (vozPT) u.voice = vozPT; u.rate = 0.92; speechSynthesis.speak(u); });
+}
+function confetes(){
+  const cores = ["#E85A4F","#5BA3D0","#6BBF59","#FFC857","#E8834A"];
+  for (let i=0;i<60;i++){ const c = document.createElement("div"); c.className="confete";
+    c.style.left = Math.random()*100+"vw"; c.style.background = cores[i%5]; c.style.animationDelay = Math.random()*0.8+"s";
+    document.body.appendChild(c); setTimeout(() => c.remove(), 3400); }
+}
+
+/* ================= NAVEGAÇÃO ================= */
+function mostrar(id){
+  limparTimers(); if ("speechSynthesis" in window) speechSynthesis.cancel();
+  document.querySelectorAll(".ecra").forEach(e => e.classList.remove("ativo"));
+  $("#"+id).classList.add("ativo"); window.scrollTo(0,0);
+}
+function total(){ return Object.values(estado.estrelas).reduce((a,b)=>a+b,0); }
+function atualizarTotal(){ $("#totalEstrelas").textContent = "★ " + total(); }
+function desenharMapa(){
+  const m = $("#mapa"); m.innerHTML = "";
+  JOGOS.forEach((j, i) => {
+    const b = document.createElement("button"); b.className = "passo";
+    const st = j.id === "texto" ? (estado.lido ? "✔ lido" : "") : "★".repeat(estado.estrelas[j.id]||0) + "☆".repeat(3-(estado.estrelas[j.id]||0));
+    b.innerHTML = `<span class="num">${i+1}</span><b>${j.nome}</b><small>${j.desc}</small><span class="st">${st}</span>`;
+    b.onclick = () => abrir(j.id);
+    m.appendChild(b);
+  });
+  atualizarTotal();
+}
+let jogoAtual = null;
+function abrir(id){
+  if (id === "texto") { mostrar("ecraTexto"); return; }
+  jogoAtual = id; mostrar("ecraJogo");
+  const area = $("#areaJogo"); area.innerHTML = "";
+  ({caca:jogoCaca, caixas:jogoCaixas, baloes:jogoBaloes, tempos:jogoTempos, conjugar:jogoConjugar, final:jogoFinal})[id](area);
+}
+function instrucao(txt){ $("#instrucao").textContent = txt; $("#btnOuvirInstrucao").onclick = () => falar(txt); }
+function estrelasDe(pct){ return pct >= .9 ? 3 : pct >= .7 ? 2 : 1; }
+function terminar(id, pct){
+  const e = estrelasDe(pct);
+  estado.estrelas[id] = Math.max(estado.estrelas[id]||0, e); guardar();
+  mostrar("ecraResultado");
+  $("#resEstrelas").textContent = "★".repeat(e) + "☆".repeat(3-e);
+  $("#resTitulo").textContent = e === 3 ? "Excelente!" : e === 2 ? "Muito bem!" : "Bom esforço!";
+  $("#resTexto").textContent = `Acertaste em ${Math.round(pct*100)}%. ` + (e < 3 ? "Joga outra vez para conquistares mais estrelas." : "Estás pronto para o 4.º ano!");
+  som("fim"); if (e === 3) confetes();
+  $("#btnRepetir").onclick = () => abrir(id);
+  if (id === "final") { $("#btnVoltarMapa").textContent = "Ver o diploma"; $("#btnVoltarMapa").onclick = abrirDiploma; }
+  else { $("#btnVoltarMapa").textContent = "Voltar ao mapa"; $("#btnVoltarMapa").onclick = () => { mostrar("ecraMapa"); desenharMapa(); }; }
+}
+function barraProg(area){ const d = document.createElement("div"); d.className = "progresso"; d.innerHTML = "<div style='width:0%'></div>"; area.appendChild(d); return p => d.firstChild.style.width = (p*100)+"%"; }
+
+/* ================= JOGO 1: CAÇA ÀS PALAVRAS ================= */
+function jogoCaca(area){
+  const rondas = baralhar([{par:0,c:"n"},{par:2,c:"d"},{par:3,c:"a"},{par:1,c:"v"}]);
+  let r = 0, acertos = 0, alvosTotal = 0;
+  const prog = barraProg(area);
+  const caixa = document.createElement("div"); area.appendChild(caixa);
+  function ronda(){
+    const {par, c} = rondas[r]; prog(r/rondas.length);
+    instrucao(`Ronda ${r+1} de ${rondas.length}: toca em todos os ${PLURAL[c]} deste parágrafo. Quando terminares, carrega em «Verificar».`);
+    caixa.innerHTML = ""; const fr = document.createElement("div"); fr.className = "frase-jogo"; caixa.appendChild(fr);
+    const toks = [];
+    parse(TEXTO[par]).forEach(t => {
+      if (t.p !== undefined) { fr.appendChild(document.createTextNode(t.p)); return; }
+      const s = document.createElement("span"); s.className = "tok"; s.textContent = t.w; s.tabIndex = 0;
+      s.dataset.alvo = t.c === c ? "1" : "0";
+      const tog = () => { if (!fr.dataset.fim) s.classList.toggle("sel"); };
+      s.onclick = tog; s.onkeydown = ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); tog(); } };
+      fr.appendChild(s); toks.push(s);
+    });
+    const barra = document.createElement("div"); barra.className = "barra";
+    barra.innerHTML = `<span class="info" id="cacaInfo">Legenda depois de verificar: verde = certo, vermelho = não é, tracejado = faltou</span>`;
+    const bv = document.createElement("button"); bv.className = "btn"; bv.textContent = "Verificar"; barra.appendChild(bv); caixa.appendChild(barra);
+    bv.onclick = () => {
+      if (fr.dataset.fim) { r++; if (r < rondas.length) ronda(); else terminar("caca", Math.max(0, acertos)/alvosTotal); return; }
+      fr.dataset.fim = "1"; let certos = 0, errados = 0, alvos = 0;
+      toks.forEach(s => { const alvo = s.dataset.alvo === "1", sel = s.classList.contains("sel"); if (alvo) alvos++;
+        s.classList.remove("sel");
+        if (sel && alvo) { s.classList.add("ok"); certos++; } else if (sel) { s.classList.add("errado"); errados++; } else if (alvo) s.classList.add("falhou"); });
+      const pontos = Math.max(0, certos - errados); acertos += pontos; alvosTotal += alvos;
+      $("#cacaInfo").textContent = `Encontraste ${certos} de ${alvos}` + (errados ? ` e escolheste ${errados} a mais.` : ".");
+      som(pontos === alvos ? "ok" : "erro");
+      bv.textContent = r < rondas.length-1 ? "Ronda seguinte" : "Ver resultado";
+    };
+  }
+  ronda();
+}
+
+/* ================= JOGO 2: CAIXAS ================= */
+function jogoCaixas(area){
+  instrucao("Toca numa palavra e depois toca na caixa da sua classe. Pensa bem antes de escolher!");
+  const cls = ["n","d","a","v"];
+  let fichas = [];
+  cls.forEach(c => baralhar(banco(c)).slice(0, c === "d" ? 3 : 4).forEach(w => fichas.push({w, c})));
+  fichas = baralhar(fichas);
+  const n = fichas.length; let feitas = 0, erros = 0, sel = null;
+  const prog = barraProg(area);
+  const bancoEl = document.createElement("div"); bancoEl.className = "banco"; area.appendChild(bancoEl);
+  const fb = document.createElement("div"); fb.className = "feedback"; area.appendChild(fb);
+  const cx = document.createElement("div"); cx.className = "caixas"; area.appendChild(cx);
+  fichas.forEach(f => { const b = document.createElement("button"); b.className = "ficha"; b.textContent = f.w; f.el = b;
+    b.onclick = () => { fichas.forEach(x => x.el.classList.remove("sel")); sel = f; b.classList.add("sel"); fb.textContent = ""; };
+    bancoEl.appendChild(b); });
+  cls.forEach(c => { const b = document.createElement("button"); b.className = "caixa " + c;
+    b.innerHTML = `<h3>${CLASSES[c]}</h3><div class="dentro"></div>`;
+    b.onclick = () => {
+      if (!sel) { fb.className = "feedback"; fb.textContent = "Primeiro escolhe uma palavra."; return; }
+      if (sel.c === c) {
+        const s = document.createElement("span"); s.textContent = sel.w; b.querySelector(".dentro").appendChild(s);
+        sel.el.remove(); feitas++; prog(feitas/n); som("ok"); fb.className = "feedback ok"; fb.textContent = "Certo!"; sel = null;
+        if (feitas === n) trackedTimeout(() => terminar("caixas", n/(n+erros)), 700);
+      } else {
+        erros++; som("erro"); const el = sel.el; el.classList.remove("abana"); void el.offsetWidth; el.classList.add("abana");
+        fb.className = "feedback errado"; fb.textContent = `«${sel.w}» não é ${CLASSES[c].toLowerCase()}. Tenta outra caixa.`;
+      }
+    };
+    cx.appendChild(b); });
+}
+
+/* ================= JOGO 3: BALÕES ================= */
+function jogoBaloes(area){
+  const rondas = baralhar(["v","a","n"]).slice(0,2).concat(["d"]);
+  let r = 0, certos = 0, falhas = 0;
+  const prog = barraProg(area);
+  const topo = document.createElement("div"); topo.className = "barra"; area.appendChild(topo);
+  const ceu = document.createElement("div"); ceu.className = "ceu"; area.appendChild(ceu);
+  const cores = {n:"#5BA3D0", d:"#E8B63E", a:"#6BBF59", v:"#E85A4F"};
+  const corBalao = ["#7B68B5","#E8834A","#3E9C9C","#C9577E","#5BA3D0"];
+  function ronda(){
+    const alvo = rondas[r]; let tempo = 30; ceu.innerHTML = ""; prog(r/rondas.length);
+    const artigos = ["um","uma","uns","umas","os","as","o","a"];
+    instrucao(`Ronda ${r+1} de ${rondas.length}: rebenta só os balões com ${PLURAL[alvo]}! Cuidado com os outros.`);
+    topo.innerHTML = `<span class="info">Alvo: <span class="etq ${alvo}">${PLURAL[alvo]}</span></span><span class="info" id="balTempo">⏱ ${tempo}s</span>`;
+    trackedTimeout(() => {
+      trackedInterval(() => {
+        const ehAlvo = Math.random() < 0.45;
+        let c = ehAlvo ? alvo : baralhar(["n","d","a","v"].filter(x => x !== alvo))[0];
+        const w = c === "d" ? baralhar(artigos)[0] : baralhar(banco(c))[0];
+        const b = document.createElement("button"); b.className = "balao"; b.textContent = w;
+        b.style.background = corBalao[Math.floor(Math.random()*corBalao.length)];
+        b.style.left = (4 + Math.random()*78) + "%"; b.style.animationDuration = (6 + Math.random()*2) + "s";
+        b.onclick = () => {
+          if (b.dataset.feito) return; b.dataset.feito = "1";
+          if (c === alvo) { certos++; som("ok"); b.classList.add("rebentou"); setTimeout(() => b.remove(), 300); }
+          else { falhas++; som("erro"); b.classList.add("mal"); b.style.background = "#999"; setTimeout(() => b.remove(), 600); }
+        };
+        b.addEventListener("animationend", ev => { if (ev.animationName === "sobe") { if (c === alvo && !b.dataset.feito) falhas += 0.5; b.remove(); } });
+        ceu.appendChild(b);
+      }, 1100);
+      trackedInterval(() => {
+        tempo--; const t = $("#balTempo"); if (t) t.textContent = "⏱ " + tempo + "s";
+        if (tempo <= 0) { limparTimers(); ceu.innerHTML = ""; r++;
+          if (r < rondas.length) { ceu.innerHTML = `<div style="display:flex;height:100%;align-items:center;justify-content:center"><button class="btn">Ronda seguinte</button></div>`; ceu.querySelector("button").onclick = ronda; }
+          else terminar("baloes", certos/Math.max(1, certos+falhas));
+        }
+      }, 1000);
+    }, 1200);
+  }
+  ronda();
+}
+
+/* ================= JOGO 4: TEMPOS ================= */
+function perguntasEscolha(area, id, itens, render){
+  let i = 0, certos = 0; const prog = barraProg(area);
+  const box = document.createElement("div"); area.appendChild(box);
+  function seguinte(){
+    prog(i/itens.length); const q = render(itens[i]);
+    box.innerHTML = `<p class="info" style="text-align:center">Pergunta ${i+1} de ${itens.length}</p><div class="pergunta">${q.html}</div><div class="opcoes"></div><div class="feedback"></div>` + (q.dica ? `<div class="dica">${q.dica}</div>` : "");
+    const op = box.querySelector(".opcoes"), fb = box.querySelector(".feedback"); let respondeu = false;
+    q.opcoes.forEach(o => { const b = document.createElement("button"); b.className = "opcao"; b.textContent = o.t;
+      b.onclick = () => { if (respondeu) return; respondeu = true;
+        if (o.certo) { certos++; b.classList.add("ok"); fb.className = "feedback ok"; fb.textContent = "Certo!"; som("ok"); }
+        else { b.classList.add("errado"); [...op.children].forEach((x, k) => { if (q.opcoes[k].certo) x.classList.add("ok"); });
+          fb.className = "feedback errado"; fb.textContent = q.explica || "Observa a resposta certa."; som("erro"); }
+        trackedTimeout(() => { i++; if (i < itens.length) seguinte(); else terminar(id, certos/itens.length); }, o.certo ? 1100 : 2600);
+      };
+      op.appendChild(b); });
+  }
+  seguinte();
+}
+const DICA_TEMPOS = "<b>Presente</b>: acontece agora (hoje). <b>Pretérito perfeito</b>: ação passada e terminada (ontem acordou). <b>Pretérito imperfeito</b>: ação passada que durava ou se repetia (nas férias passeava).";
+function qTempo(it){
+  const html = it.f.replace(/\[([^\]]+)\]/, '<span class="alvo">$1</span>');
+  const verbo = it.f.match(/\[([^\]]+)\]/)[1];
+  return { html: html + '<span class="pista">Em que tempo está o verbo destacado?</span>',
+    opcoes: ["pres","perf","imp"].map(k => ({t:TEMPOS[k], certo:k === it.t})),
+    explica: `«${verbo}» está no ${TEMPOS[it.t].toLowerCase()}.`, dica: DICA_TEMPOS };
+}
+function jogoTempos(area){
+  instrucao("Lê cada frase do texto e descobre em que tempo do modo indicativo está o verbo destacado.");
+  const grupos = ["pres","perf","imp"].map(t => baralhar(FRASES_TEMPO.filter(x => x.t === t)).slice(0,3));
+  perguntasEscolha(area, "tempos", baralhar(grupos.flat()), qTempo);
+}
+
+/* ================= JOGO 5: CONJUGAR ================= */
+function qConjugar(it){
+  const t = it.t;
+  return { html: it.s.replace("___", '<span class="alvo">_____</span>') + `<span class="pista">Verbo <b>${it.i}</b> no <b>${TEMPOS[t].toLowerCase()}</b></span>`,
+    opcoes: baralhar(["pres","perf","imp"].map(k => ({t:it.f[k], certo:k === t}))),
+    explica: `No ${TEMPOS[t].toLowerCase()}, a forma certa é «${it.f[t]}».`, dica: DICA_TEMPOS };
+}
+function jogoConjugar(area){
+  instrucao("Completa cada frase com a forma do verbo no tempo pedido. Repara também em quem pratica a ação: eu, tu, ele, nós ou eles.");
+  const tempos = baralhar(["pres","pres","pres","perf","perf","perf","imp","imp"]);
+  const itens = baralhar(CONJUGAR).slice(0,8).map((x, k) => Object.assign({}, x, {t:tempos[k]}));
+  perguntasEscolha(area, "conjugar", itens, qConjugar);
+}
+
+/* ================= JOGO 6: DESAFIO FINAL ================= */
+function jogoFinal(area){
+  instrucao("Desafio final! Responde a perguntas sobre classes de palavras e tempos verbais. No fim recebes o teu diploma.");
+  const itens = [];
+  const artigosSeguros = ["um","uma","os","as"];
+  ["n","a","v","d"].forEach(c => {
+    const lista = c === "d" ? artigosSeguros : banco(c);
+    baralhar(lista).slice(0,1).forEach(w => itens.push({tipo:"classe", w, c}));
+  });
+  baralhar(FRASES_TEMPO).slice(0,3).forEach(x => itens.push(Object.assign({tipo:"tempo"}, x)));
+  const tps = baralhar(["pres","perf","imp"]);
+  baralhar(CONJUGAR).slice(0,3).forEach((x, k) => itens.push(Object.assign({tipo:"conj", t:tps[k]}, x)));
+  perguntasEscolha(area, "final", baralhar(itens), it => {
+    if (it.tipo === "tempo") return qTempo(it);
+    if (it.tipo === "conj") return qConjugar(it);
+    const frase = TEXTO.map(limpo).join(" ").split(/(?<=[.!?»])\s+/).find(f => new RegExp("(^|[^A-Za-zÀ-ÿ])" + it.w + "([^A-Za-zÀ-ÿ]|$)", "i").test(f));
+    return { html: `Que classe de palavra é <span class="alvo">${it.w}</span>?` + (frase ? `<span class="pista">«${frase}»</span>` : ""),
+      opcoes: ["n","d","a","v"].map(k => ({t:CLASSES[k], certo:k === it.c})),
+      explica: `«${it.w}» é ${CLASSES[it.c].toLowerCase()}.` };
+  });
+}
+function abrirDiploma(){
+  mostrar("ecraDiploma");
+  $("#dipEstrelas").textContent = total();
+  $("#dipData").textContent = new Date().toLocaleDateString("pt-PT", {day:"numeric", month:"long", year:"numeric"});
+}
+
+/* ================= TEXTO ================= */
+function desenharTexto(){
+  $("#folhaTexto").innerHTML = `<h3>${TITULO}</h3>` + TEXTO.map(p => `<p>${limpo(p)}</p>`).join("");
+}
+$("#btnLerTexto").onclick = () => falar(TITULO + ". " + TEXTO.map(limpo).join(" "));
+$("#btnTextoFeito").onclick = () => { estado.lido = true; guardar(); mostrar("ecraMapa"); desenharMapa(); };
+
+/* ================= PAINEL DO PROFESSOR ================= */
+const HASH = "0a936822256cdf714ac94631348040d4776925ed398605226f35c9c264149728";
+async function sha256(t){
+  if (!(window.crypto && crypto.subtle)) return null;
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2,"0")).join("");
+}
+function fecharProf(){ $("#modalProf").classList.remove("ativo"); }
+$("#btnProf").onclick = () => { $("#modalProf").classList.add("ativo"); $("#passeProf").value = ""; $("#profErro").textContent = ""; $("#passeProf").focus(); };
+document.querySelectorAll("[data-fechar]").forEach(b => b.onclick = fecharProf);
+async function entrarProf(){
+  const h = await sha256($("#passeProf").value.trim());
+  if (h === HASH) { $("#profLogin").style.display = "none"; $("#profPainel").style.display = "block"; }
+  else $("#profErro").textContent = "Palavra-passe incorreta.";
+}
+$("#btnEntrarProf").onclick = entrarProf;
+$("#passeProf").onkeydown = e => { if (e.key === "Enter") entrarProf(); };
+JOGOS.forEach(j => { const b = document.createElement("button"); b.className = "btn sec"; b.style.fontSize = ".95rem"; b.style.padding = "8px"; b.textContent = j.nome;
+  b.onclick = () => { fecharProf(); abrir(j.id); }; $("#saltos").appendChild(b); });
+(() => { const b = document.createElement("button"); b.className = "btn sec"; b.style.fontSize = ".95rem"; b.style.padding = "8px"; b.textContent = "Diploma";
+  b.onclick = () => { fecharProf(); abrirDiploma(); }; $("#saltos").appendChild(b); })();
+$("#btnReset").onclick = () => { if (confirm("Apagar as estrelas guardadas neste computador?")) { estado.estrelas = {}; guardar(); desenharMapa(); fecharProf(); mostrar("ecraMapa"); } };
+
+/* ================= ARRANQUE ================= */
+function atualizarSom(){ $("#btnSom").textContent = estado.som ? "🔈" : "🔇"; }
+$("#btnSom").onclick = () => { estado.som = !estado.som; guardar(); atualizarSom(); };
+$("#btnCasa").onclick = () => { mostrar("ecraMapa"); desenharMapa(); };
+$("#btnComecar").onclick = () => { som("ok"); mostrar("ecraMapa"); desenharMapa(); };
+$("#btnDipMapa").onclick = () => { mostrar("ecraMapa"); desenharMapa(); };
+document.addEventListener("click", e => { const b = e.target.closest("[data-ler]"); if (b) falar(b.dataset.ler); });
+desenharTexto(); atualizarSom(); atualizarTotal();
+</script>
+</body>
+</html>

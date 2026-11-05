@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>O Bolo da Mãe Cila</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@600;800&display=swap">
+<style>
+/* Layout: uma coluna central, um cartão de jogo de cada vez, barra de estrelas no topo */
+:root{
+  --bg:#eef6f3; --card:#ffffff; --fg:#1f3a33; --muted:#5d7a72;
+  --accent:#e0772a; --accent2:#2f8f6f; --ok:#2f9e57; --bad:#d64545; --line:#cfe3dc;
+  --display:"Baloo 2","Trebuchet MS",sans-serif; --body:"Andika","Comic Sans MS",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13211d;--card:#1c2f29;--fg:#e8f3ef;--muted:#9fbab2;--accent:#f39a55;--accent2:#5cc39d;--ok:#5cc97f;--bad:#f07a7a;--line:#2d4740;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#13211d;--card:#1c2f29;--fg:#e8f3ef;--muted:#9fbab2;--accent:#f39a55;--accent2:#5cc39d;--ok:#5cc97f;--bad:#f07a7a;--line:#2d4740;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:20px;padding-inline:16px;padding-block:16px 40px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1{font-family:var(--display);font-weight:800;color:var(--accent);margin:0;font-size:2rem;text-align:center;text-wrap:balance}
+.stars{display:flex;justify-content:center;gap:6px;font-size:1.6rem;min-height:2rem}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tabs button{font-family:var(--display);font-size:1rem;border:2px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.card h2{font-family:var(--display);margin:0;font-size:1.3rem;color:var(--accent2)}
+.texto p{margin:0;line-height:1.9;font-size:1.3rem}
+.hl{color:var(--accent);font-weight:700}
+.q{font-size:1.35rem;font-weight:700}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.opt{font-family:var(--body);font-size:1.3rem;padding:14px 10px;border-radius:14px;border:3px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.opt .pic{font-size:2.4rem;line-height:1}
+.opt:hover{border-color:var(--accent)}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--card))}
+.opt.no{border-color:var(--bad);animation:shake .3s}
+.word{font-size:2.2rem;font-weight:700;letter-spacing:.05em;text-align:center}
+.gap{display:inline-block;min-width:1.6em;border-bottom:4px solid var(--accent);color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{font-family:var(--body);font-size:1.3rem;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.chip[disabled]{opacity:.3;cursor:default}
+.answer{min-height:3.2rem;border:3px dashed var(--line);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;font-size:1.3rem}
+.feedback{font-family:var(--display);font-size:1.3rem;text-align:center;min-height:1.8rem}
+.feedback.ok{color:var(--ok)}.feedback.no{color:var(--bad)}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:var(--display);font-size:1.1rem;border:none;border-radius:12px;padding:10px 18px;background:var(--accent);color:#fff;cursor:pointer}
+.btn.sec{background:transparent;border:2px solid var(--line);color:var(--fg)}
+.progress{color:var(--muted);text-align:center;font-size:1rem}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+footer{text-align:center;color:var(--muted);font-size:.85rem}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.opt.no{animation:none}}
+</style>
+
+<div class="wrap">
+  <h1>O bolo da mãe Cila</h1>
+  <div class="stars" id="stars" aria-label="Estrelas ganhas"></div>
+  <nav class="tabs" id="tabs">
+    <button data-t="ler" aria-pressed="true">1. Ler</button>
+    <button data-t="perguntas" aria-pressed="false">2. Perguntas</button>
+    <button data-t="letras" aria-pressed="false">3. Letras</button>
+    <button data-t="frases" aria-pressed="false">4. Frases</button>
+  </nav>
+  <main id="stage"></main>
+  <footer>C. Sofia Oliveira · Gaveta de Fichas</footer>
+</div>
+
+<script>
+const TEXTO=["A <span class=hl>Célia</span> foi a casa da <span class=hl>Cecília</span>.","A <span class=hl>Célia</span> levou um bolo.","O bolo é de <span class=hl>cenoura</span>.","A mãe <span class=hl>Cila</span> fez o bolo.","À tarde, elas vão comer <span class=hl>maçãs</span>.","Depois, vão ao parque.","Lá, andam no <span class=hl>baloiço</span>."];
+const PERG=[
+ {q:"Quem foi a casa da Cecília?",o:[["👧","Célia"],["👩","Cila"],["👦","Rui"]],c:0},
+ {q:"De que é o bolo?",o:[["🍫","chocolate"],["🥕","cenoura"],["🍋","limão"]],c:1},
+ {q:"Quem fez o bolo?",o:[["👵","a avó"],["👧","a Célia"],["👩","a mãe Cila"]],c:2},
+ {q:"O que vão comer à tarde?",o:[["🍌","bananas"],["🍎","maçãs"],["🍐","peras"]],c:1},
+ {q:"Onde andam no baloiço?",o:[["🏫","na escola"],["🏠","em casa"],["🌳","no parque"]],c:2}];
+const LET=[
+ {w:["","lia"],o:["Cé","Ca","Co"],c:0,p:"👧"},
+ {w:["","noura"],o:["ca","ce","co"],c:1,p:"🥕"},
+ {w:["ma","s"],o:["çã","cã","sã"],c:0,p:"🍎"},
+ {w:["","la"],o:["Ca","Ci","Co"],c:1,p:"👩"},
+ {w:["balo","o"],o:["ic","iç","is"],c:1,p:"🛝"}];
+const FR=["A Célia levou um bolo.","O bolo é de cenoura.","A mãe Cila fez o bolo.","Elas vão ao parque."];
+
+let stars=0,tab="ler",idx={perguntas:0,letras:0,frases:0};
+const $=s=>document.querySelector(s),stage=$("#stage");
+function falar(t){try{const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,""));u.lang="pt-PT";u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function ganhar(){stars++;$("#stars").textContent="⭐".repeat(stars)}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fim(nome,next){stage.innerHTML=`<section class=card><h2>Muito bem!</h2><p class=q>Acabaste ${nome}. 🎉</p><div class=actions>${next?`<button class=btn id=nx>Continuar</button>`:""}<button class="btn sec" id=rp>Jogar outra vez</button></div></section>`;
+ if(next)$("#nx").onclick=()=>go(next);$("#rp").onclick=()=>{idx[tab]=0;render()}}
+
+function render(){
+ document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===tab));
+ if(tab==="ler"){stage.innerHTML=`<section class="card texto"><h2>Lê o texto</h2>${TEXTO.map((f,i)=>`<p><button class="chip" data-i=${i} aria-label="Ouvir frase">🔊</button> ${f}</p>`).join("")}<div class=actions><button class=btn id=all>Ouvir tudo</button><button class="btn sec" id=nx>Já li!</button></div></section>`;
+  stage.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>falar(TEXTO[b.dataset.i]));
+  $("#all").onclick=()=>falar(TEXTO.join(" "));$("#nx").onclick=()=>go("perguntas");return}
+ if(tab==="perguntas"){const i=idx.perguntas;if(i>=PERG.length)return fim("as perguntas","letras");const p=PERG[i];
+  stage.innerHTML=`<section class=card><h2>Escolhe a resposta certa</h2><p class=progress>${i+1} de ${PERG.length}</p><p class=q>${p.q} <button class=chip id=ouv aria-label="Ouvir pergunta">🔊</button></p><div class=opts>${p.o.map((o,k)=>`<button class=opt data-k=${k}><span class=pic>${o[0]}</span>${o[1]}</button>`).join("")}</div><div class=feedback id=fb></div></section>`;
+  $("#ouv").onclick=()=>falar(p.q);let tentou=false;
+  stage.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(+b.dataset.k===p.c){b.classList.add("ok");$("#fb").className="feedback ok";$("#fb").textContent="Certo!";if(!tentou)ganhar();setTimeout(()=>{idx.perguntas++;render()},1000)}else{tentou=true;b.classList.remove("no");void b.offsetWidth;b.classList.add("no");$("#fb").className="feedback no";$("#fb").textContent="Tenta outra vez."}});return}
+ if(tab==="letras"){const i=idx.letras;if(i>=LET.length)return fim("as letras","frases");const l=LET[i];
+  stage.innerHTML=`<section class=card><h2>Que letras faltam?</h2><p class=progress>${i+1} de ${LET.length}</p><div class=word><div style="font-size:3rem">${l.p}</div>${l.w[0]}<span class=gap id=gp>?</span>${l.w[1]}</div><div class=opts>${l.o.map((o,k)=>`<button class=opt data-k=${k}>${o}</button>`).join("")}</div><div class=feedback id=fb></div></section>`;
+  let tentou=false;
+  stage.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(+b.dataset.k===l.c){b.classList.add("ok");$("#gp").textContent=l.o[l.c];const w=l.w[0]+l.o[l.c]+l.w[1];falar(w);$("#fb").className="feedback ok";$("#fb").textContent="Boa! "+w;if(!tentou)ganhar();setTimeout(()=>{idx.letras++;render()},1400)}else{tentou=true;b.classList.remove("no");void b.offsetWidth;b.classList.add("no");$("#fb").className="feedback no";$("#fb").textContent="Tenta outra vez."}});return}
+ if(tab==="frases"){const i=idx.frases;if(i>=FR.length)return fim("todas as frases",null);const certa=FR[i].split(" ");let pal=shuffle(certa.map((w,k)=>({w,k})));if(pal.every((p,k)=>p.k===k))pal.reverse();let esc=[];
+  stage.innerHTML=`<section class=card><h2>Ordena as palavras</h2><p class=progress>${i+1} de ${FR.length}</p><div class=answer id=ans></div><div class=row id=pool>${pal.map((p,k)=>`<button class=chip data-k=${k}>${p.w}</button>`).join("")}</div><div class=actions><button class="btn sec" id=lp>Apagar</button><button class=btn id=ck>Verificar</button></div><div class=feedback id=fb></div></section>`;
+  const draw=()=>{$("#ans").innerHTML=esc.map(k=>`<span>${pal[k].w}</span>`).join("");stage.querySelectorAll("#pool .chip").forEach(b=>b.disabled=esc.includes(+b.dataset.k))};
+  stage.querySelectorAll("#pool .chip").forEach(b=>b.onclick=()=>{esc.push(+b.dataset.k);draw()});
+  $("#lp").onclick=()=>{esc=[];draw();$("#fb").textContent=""};
+  let tentou=false;
+  $("#ck").onclick=()=>{const f=esc.map(k=>pal[k].w).join(" ");if(f===FR[i]){$("#fb").className="feedback ok";$("#fb").textContent="Certo!";falar(f);if(!tentou)ganhar();setTimeout(()=>{idx.frases++;render()},1500)}else{tentou=true;$("#fb").className="feedback no";$("#fb").textContent=esc.length<certa.length?"Faltam palavras.":"Ainda não. Tenta outra vez."}};return}
+}
+function go(t){tab=t;render();window.scrollTo(0,0)}
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>go(b.dataset.t));
+render();
+</script>
+
+</body></html>
