@@ -196,3 +196,17 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .cartao-ano, .cartao-ano:hover { transition: none; transform: none; }
 }
+
+/* Ligação discreta para o Espaço do Professor, na barra de cima da entrada */
+.barra-topo { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); }
+.ligacao-professores {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-toque);
+  padding: 0 var(--espaco-2);
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--tinta-suave);
+}

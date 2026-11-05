@@ -6,7 +6,12 @@ import { anos } from "@/lib/anos";
 export default function Entrada() {
   return (
     <main className="pagina">
-      <span className="marca">Gaveta Kids</span>
+      <div className="barra-topo">
+        <span className="marca">Gaveta Kids</span>
+        <Link href="/professores/" className="ligacao-professores">
+          Professores
+        </Link>
+      </div>
 
       <header className="cabecalho">
         <h1 className="titulo-1">Olá! Escolhe o teu ano</h1>
@@ -29,12 +34,6 @@ export default function Entrada() {
           </li>
         ))}
       </ul>
-
-      <section aria-labelledby="professores-titulo" style={{ marginTop: "var(--espaco-6)", padding: "var(--espaco-4)", background: "var(--superficie)", borderRadius: "var(--raio-g)", boxShadow: "var(--sombra-cartao)" }}>
-        <h2 id="professores-titulo" className="titulo-2">Espaço do Professor</h2>
-        <p>Atividades por ano e disciplina, com orientações para a exploração pedagógica.</p>
-        <Link href="/professores/" className="botao">Consultar recursos para professores</Link>
-      </section>
 
       <Rodape />
     </main>

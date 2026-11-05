@@ -20,7 +20,7 @@ export default function EspacoProfessor() {
       <header className={estilos.introducao}>
         <span className="etiqueta">Gaveta de Fichas · Apoio pedagógico</span>
         <h1 className="titulo-1">Espaço do Professor</h1>
-        <p>Encontra os jogos educativos por ano e disciplina. Consulta uma proposta de exploração pedagógica e abre diretamente cada atividade.</p>
+        <p>Jogos educativos organizados por ano e disciplina, cada um com uma proposta de exploração pedagógica e ligação direta para a atividade.</p>
       </header>
       <Catalogo recursos={recursosProfessor} />
       <Rodape />

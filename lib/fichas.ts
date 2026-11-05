@@ -8,7 +8,6 @@ export type Ficha = {
   sequencia: { etapa: string; descricao: string }[];
   avaliacao: string[];
   observacoes?: string;
-  periodo?: 1 | 2 | 3;
 };
 
 const propostas: Record<string, Omit<Ficha, "pasta">> = {
