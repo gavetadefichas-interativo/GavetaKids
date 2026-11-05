@@ -1,0 +1,176 @@
+/* Regras do sistema de design Gaveta Kids. As cores, espaços, cantos e sombras vêm de tokens.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: var(--font-leitura), system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+h1, h2, h3 { font-family: var(--font-titulos), system-ui, sans-serif; margin: 0; }
+.titulo-1 { font-size: 48px; line-height: 52px; font-weight: 900; }
+.titulo-2 { font-size: 32px; line-height: 40px; font-weight: 800; }
+.titulo-3 { font-size: 24px; line-height: 32px; font-weight: 800; }
+.etiqueta { font-family: var(--font-titulos), system-ui, sans-serif; font-size: 16px; line-height: 20px; font-weight: 700; }
+
+a { color: inherit; }
+
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; }
+
+/* Cores de cada ano: --ano (preenchimento), --ano-texto (texto sobre o preenchimento),
+   --ano-cor-texto (texto na cor do ano sobre fundo claro), --ano-claro (fundo de zona). */
+.ano-1 { --ano: var(--azul); --ano-texto: var(--branco); --ano-cor-texto: var(--azul); --ano-claro: var(--azul-claro); }
+.ano-2 { --ano: var(--roxo); --ano-texto: var(--branco); --ano-cor-texto: var(--roxo); --ano-claro: var(--roxo-claro); }
+.ano-3 { --ano: var(--verde); --ano-texto: var(--branco); --ano-cor-texto: var(--verde); --ano-claro: var(--verde-claro); }
+.ano-4 { --ano: var(--laranja); --ano-texto: var(--tinta); --ano-cor-texto: var(--laranja-escuro); --ano-claro: var(--laranja-claro); }
+
+/* Página */
+.pagina {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--espaco-5) var(--espaco-3) var(--espaco-6);
+}
+@media (min-width: 720px) {
+  .pagina { padding: var(--espaco-6); }
+}
+
+.marca {
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.cabecalho { margin: var(--espaco-5) 0 var(--espaco-5); }
+.cabecalho p { margin: var(--espaco-2) 0 0; color: var(--tinta-suave); }
+
+/* Escolha do ano */
+.grelha-anos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espaco-4);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.cartao-ano {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: var(--alvo-toque);
+  background: var(--superficie);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-cartao);
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 120ms ease;
+}
+.cartao-ano:hover { transform: translateY(-4px); }
+.cartao-ano:active { transform: translateY(0); }
+
+.cartao-ano .faixa {
+  background: var(--ano);
+  color: var(--ano-texto);
+  padding: var(--espaco-2) var(--espaco-4);
+}
+
+.cartao-ano .figura {
+  background: var(--ano-claro);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: var(--espaco-4) var(--espaco-4) var(--espaco-2);
+}
+.cartao-ano .figura img { width: auto; height: 180px; }
+
+.cartao-ano .texto { padding: var(--espaco-3) var(--espaco-4) var(--espaco-4); }
+.cartao-ano .texto h2 { color: var(--ano-cor-texto); }
+.cartao-ano .texto p { margin: var(--espaco-1) 0 0; color: var(--tinta-suave); font-size: 16px; line-height: 22px; }
+
+/* Página de um ano */
+.topo-ano {
+  background: var(--ano-claro);
+  border-radius: var(--raio-g);
+  padding: var(--espaco-4);
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+  margin: var(--espaco-4) 0 var(--espaco-5);
+}
+.topo-ano img { width: auto; height: 160px; flex: none; }
+.topo-ano .rotulo {
+  display: inline-block;
+  background: var(--ano);
+  color: var(--ano-texto);
+  border-radius: var(--raio-total);
+  padding: var(--espaco-1) var(--espaco-3);
+}
+.topo-ano h1 { margin-top: var(--espaco-2); }
+.topo-ano p { margin: var(--espaco-2) 0 0; }
+@media (max-width: 560px) {
+  .topo-ano { flex-direction: column; text-align: center; }
+  .topo-ano .titulo-1 { font-size: 36px; line-height: 40px; }
+}
+
+.grelha-disciplinas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espaco-3);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.disciplina {
+  min-height: calc(var(--alvo-toque) * 2);
+  background: var(--superficie);
+  border: 2px solid var(--linha);
+  border-radius: var(--raio-g);
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+}
+.disciplina .estado { color: var(--tinta-suave); }
+
+/* Botões */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--alvo-toque);
+  padding: 0 var(--espaco-4);
+  border-radius: var(--raio-m);
+  border: 2px solid var(--contorno);
+  background: var(--superficie);
+  color: var(--tinta);
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: var(--sombra-botao);
+  cursor: pointer;
+}
+.botao:active { transform: translateY(4px); box-shadow: none; }
+
+.rodape {
+  margin-top: var(--espaco-6);
+  color: var(--tinta-suave);
+  font-size: 16px;
+  line-height: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartao-ano, .cartao-ano:hover { transition: none; transform: none; }
+}
