@@ -114,13 +114,19 @@
   color: var(--tinta-suave); text-align: center;
 }
 .pickRole, .pickGreeting { grid-area: 1 / 1; }
-.pickGreeting { opacity: 0; color: var(--ano-cor-texto); }
+.pickGreeting { opacity: 0; color: var(--ano-cor-texto); transition: opacity .15s ease; }
+.pickRole { transition: opacity .15s ease; }
+@media (hover: none), (pointer: coarse) {
+  .pickGreeting { display: none; }
+}
 @media (hover: hover) and (pointer: fine) {
   .pick:hover .pickRole { opacity: 0; }
   .pick:hover .pickGreeting { opacity: 1; }
 }
-.pick:focus-visible .pickRole { opacity: 0; }
-.pick:focus-visible .pickGreeting { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .pick:focus-visible .pickRole { opacity: 0; }
+  .pick:focus-visible .pickGreeting { opacity: 1; }
+}
 /* Botão: mostra claramente onde tocar. */
 .pickButton {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--espaco-2);
@@ -138,8 +144,15 @@
   padding: var(--espaco-3) var(--espaco-4); margin-bottom: var(--espaco-5);
   background: var(--marca-claro); border-radius: var(--raio-g);
 }
-.heading img { width: auto; max-width: 110px; max-height: 120px; object-fit: contain; }
+.heading img { flex: none; width: auto; max-width: 110px; max-height: 120px; object-fit: contain; }
+.headingText { min-width: 0; display: grid; gap: var(--espaco-1); }
+.headingRole {
+  width: fit-content; color: var(--ano-cor-texto);
+  font: 800 16px/22px var(--font-titulos), system-ui, sans-serif;
+}
 .heading h1 { margin: 0; font-size: clamp(28px, 4vw, 40px); line-height: 1.2; font-weight: 900; }
+.heading p { margin: 0; font-size: 18px; line-height: 1.45; }
+.headingHint { color: var(--tinta-suave); }
 
 .subjects {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espaco-3);
@@ -173,6 +186,11 @@
   color: var(--tinta); text-decoration: none;
 }
 .game:hover { border-color: var(--cor-texto); background: var(--cor-claro); }
+.gameArrow {
+  margin-left: auto; flex: none; color: var(--cor-texto);
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-size: 26px; font-weight: 800;
+}
 .game:focus-visible { background: var(--cor-claro); }
 .teacher:hover, .back:hover { border-color: var(--marca); }
 .thumb { flex: none; display: block; width: 112px; height: 84px; overflow: hidden; object-fit: cover; border-radius: var(--raio-p); background: var(--cor-claro); }
@@ -205,13 +223,14 @@
   .pickButton { font-size: 20px; padding: 0 var(--espaco-3); }
   .heading { padding: var(--espaco-3); gap: var(--espaco-3); margin-bottom: var(--espaco-4); }
   .heading img { max-height: 84px; max-width: 76px; }
+  .heading p { font-size: 16px; line-height: 1.45; }
   .subjects { grid-template-columns: 1fr; }
   .subject { padding: var(--espaco-3); }
 }
 @media (prefers-reduced-motion: reduce) {
   .pickArt img { transition: none; }
   .pick:hover .pickArt img, .pick:focus-visible .pickArt img { transform: none; }
-  .pickButton { transition: none; }
+  .pickButton, .pickGreeting, .pickRole { transition: none; }
   .pick:hover .pickButton, .pick:focus-visible .pickButton { transform: none; }
 }
 
@@ -219,4 +238,8 @@
 @media (max-width: 420px) {
   .thumb { width: 90px; height: 68px; }
   .game { gap: var(--espaco-2); padding: var(--espaco-2); }
+  .gameArrow { font-size: 22px; }
+  .scene { column-gap: var(--espaco-2); }
+  .pickButton { max-width: 100%; padding: 0 var(--espaco-2); font-size: 19px; }
+  .pickArt::before { max-width: 100%; }
 }
