@@ -16,19 +16,19 @@
 /* Cabeçalho */
 .bar {
   display: flex; justify-content: space-between; align-items: center; gap: var(--espaco-3);
-  padding: var(--espaco-3) 0; border-bottom: 1px solid var(--linha);
+  padding: var(--espaco-3) 0; border-bottom: 3px solid var(--acento);
 }
 .brand {
   font-family: var(--font-titulos), system-ui, sans-serif;
   font-weight: 900; font-size: 28px; line-height: 32px;
   color: var(--tinta); text-decoration: none;
 }
-.brand span { color: var(--marca-texto); }
+.brand span { color: var(--acento-texto); }
 .teacher, .back {
   display: inline-flex; align-items: center; gap: var(--espaco-2);
   min-height: var(--alvo-toque); padding: 0 var(--espaco-3);
   background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-m);
-  color: var(--marca-texto); text-decoration: none;
+  color: var(--marca); text-decoration: none;
   font-family: var(--font-titulos), system-ui, sans-serif; font-weight: 800; font-size: 18px;
 }
 
@@ -99,6 +99,7 @@
   color: var(--tinta); text-decoration: none;
 }
 .game:hover { border-color: var(--cor-texto); }
+.teacher:hover, .back:hover { border-color: var(--marca); }
 .thumb { flex: none; width: 96px; height: 72px; object-fit: cover; border-radius: var(--raio-p); background: var(--cor-claro); }
 .game strong { display: block; font-size: 20px; line-height: 26px; font-weight: 800; }
 .game strong + span { display: block; margin-top: var(--espaco-1); color: var(--tinta-suave); }
