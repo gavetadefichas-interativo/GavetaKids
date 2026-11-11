@@ -131,14 +131,24 @@
 .pickButton {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--espaco-2);
   min-height: var(--alvo-toque); padding: 0 var(--espaco-4);
-  background: var(--ano); color: var(--ano-texto); border-radius: 999px;
+  background: var(--ano); color: var(--ano-texto); border-radius: var(--raio-m);
   font-family: var(--font-titulos), system-ui, sans-serif; font-size: 22px; font-weight: 900; white-space: nowrap;
-  box-shadow: var(--sombra-cartao); transition: transform .15s;
+  box-shadow: var(--sombra-cartao); transition: transform .15s ease-out, box-shadow .15s ease-out;
 }
-.pick:hover .pickButton, .pick:focus-visible .pickButton { transform: scale(1.06); }
+.pick:hover .pickButton, .pick:focus-visible .pickButton { transform: translateY(-2px); }
+.pick:active .pickButton { transform: translateY(1px); box-shadow: none; }
 
 /* Página de ano */
-.back { margin: var(--espaco-4) 0 var(--espaco-3); }
+.back {
+  margin: var(--espaco-4) 0 var(--espaco-3);
+  border: 2px solid var(--contorno);
+  border-radius: var(--raio-m);
+  font-size: 18px;
+  box-shadow: var(--sombra-botao);
+  transition: border-color .15s ease, background-color .15s ease, transform .15s ease;
+}
+.back:hover { background: var(--marca-claro); }
+.back:active { transform: translateY(2px); box-shadow: none; }
 .heading {
   display: flex; align-items: center; gap: var(--espaco-4);
   padding: var(--espaco-3) var(--espaco-4); margin-bottom: var(--espaco-5);
@@ -230,7 +240,7 @@
 @media (prefers-reduced-motion: reduce) {
   .pickArt img { transition: none; }
   .pick:hover .pickArt img, .pick:focus-visible .pickArt img { transform: none; }
-  .pickButton, .pickGreeting, .pickRole { transition: none; }
+  .pickButton, .pickGreeting, .pickRole, .back { transition: none; }
   .pick:hover .pickButton, .pick:focus-visible .pickButton { transform: none; }
 }
 
