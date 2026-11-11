@@ -29,7 +29,7 @@ export default function Entrada() {
           <ul className={styles.scene}>
             {anos.map((a) => (
               <li key={a.numero}>
-                <Link href={`/ano/${a.numero}/`} className={`${styles.pick} ${a.tema}`}>
+                <Link href={`/ano/${a.numero}/`} className={`${styles.pick} ${a.tema}`} aria-label={`${a.rotulo}, com ${a.mascote}, ${a.papel}`}>
                   <span className={styles.pickArt}><Image src={a.imagem} alt="" priority /></span>
                   <span className={styles.pickName}>{a.mascote}</span>
                   <span className={styles.pickMessage}>
