@@ -121,6 +121,39 @@ render();
 #gk-nav a:focus-visible,#gk-nav summary:focus-visible{outline:3px solid #0064c2!important;outline-offset:3px!important}
 @media(max-width:480px){#gk-nav{top:calc(78px + env(safe-area-inset-top,0px))!important;right:8px!important}}
 @media print{#gk-nav{display:none!important}}
+
+/* GavetaKids — padrão visual comum de navegação e botões de ação.
+   Preserva os botões de resposta, tabuleiros e controlos especiais de cada jogo. */
+#gk-nav summary {
+  min-height:48px!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  border:2px solid #9c8c7a!important;
+  color:#14263e!important;
+  font:800 16px/22px system-ui,sans-serif!important;
+  box-shadow:0 2px 0 #d9d1c7!important;
+}
+#gk-nav summary:hover {background:#eef2f7!important;border-color:#14263e!important}
+#gk-nav summary:active {transform:translateY(1px)!important;box-shadow:none!important}
+#gk-nav nav {border:1px solid #e8e1d7!important;border-radius:12px!important}
+#gk-nav nav a {
+  border-radius:10px!important;
+  font:750 16px/22px system-ui,sans-serif!important;
+}
+#gk-nav nav a:active {background:#e3f0fc!important}
+:where(.btn,.btn-txt,.nav button,.tabs button):not(.btn-jogar):not(.btn-pronto):not(.icon-btn) {
+  border-radius:12px;
+  min-height:44px;
+  transition:filter .15s ease,transform .15s ease;
+}
+:where(.btn,.btn-txt,.nav button,.tabs button):not(.btn-jogar):not(.btn-pronto):not(.icon-btn):hover:not(:disabled) {filter:brightness(.96)}
+:where(.btn,.btn-txt,.nav button,.tabs button):not(.btn-jogar):not(.btn-pronto):not(.icon-btn):active:not(:disabled) {transform:translateY(1px)}
+:where(.btn,.btn-txt,.nav button,.tabs button):not(.btn-jogar):not(.btn-pronto):not(.icon-btn):focus-visible {
+  outline:3px solid #14263e;outline-offset:3px;
+}
+@media(prefers-reduced-motion:reduce) {
+  :where(.btn,.btn-txt,.nav button,.tabs button) {transition:none!important}
+}
 </style>
 <details id="gk-nav"><summary aria-label="Abrir menu de regresso">↩ Voltar</summary><nav aria-label="Regressar ao GavetaKids"><a href="../../ano/1/">← 1.º ano</a><a href="../../professores/">Espaço do Professor</a><a href="../../">Página inicial</a></nav></details>
 </body></html>
