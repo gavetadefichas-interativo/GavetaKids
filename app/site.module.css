@@ -40,37 +40,46 @@
 }
 
 /* Página inicial */
-/* Faixa ilustrada (decorativa) com o título no céu; no telemóvel o título passa para cima. */
-.hero { position: relative; margin: var(--espaco-4) 0 var(--espaco-5); }
+/* Cena da página inicial: ilustração de fundo, título no céu e as quatro mascotes
+   no prado. Cada mascote é a ligação para o seu ano. */
+.hero {
+  position: relative; overflow: hidden;
+  height: clamp(360px, 36vw, 420px);
+  margin: var(--espaco-4) 0 0;
+  border-radius: var(--raio-g);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.heroArt { position: absolute; inset: 0; }
+.heroArt img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
 .hero h1 {
-  position: absolute; z-index: 1; top: 0; left: 0; right: 0;
-  margin: 0; padding: 6% var(--espaco-3) 0;
-  text-align: center; font-size: clamp(30px, 5vw, 48px); line-height: 1.15; font-weight: 900;
+  position: relative; margin: 0; padding: var(--espaco-5) var(--espaco-3) 0;
+  text-align: center; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.15; font-weight: 900;
 }
-.heroArt { position: relative; overflow: hidden; height: clamp(200px, 33vw, 373px); border-radius: var(--raio-g); }
-.heroArt img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
 
-.years {
+.scene {
+  position: relative; list-style: none; margin: 0; padding: 0 var(--espaco-4) var(--espaco-4);
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--espaco-3);
-  list-style: none; padding: 0; margin: 0;
+  max-width: 880px; width: 100%; align-self: center; align-items: end;
 }
-.yearCard {
+.pick {
   display: flex; flex-direction: column; align-items: center; gap: var(--espaco-2);
-  padding: var(--espaco-3) var(--espaco-3) var(--espaco-4);
-  background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-g);
-  box-shadow: var(--sombra-cartao); color: var(--tinta); text-decoration: none;
-  transition: transform .15s, border-color .15s;
+  color: var(--tinta); text-decoration: none; border-radius: var(--raio-m);
+  transition: transform .15s;
 }
-.yearCard:hover { border-color: var(--marca); transform: translateY(-3px); }
-.mascot {
-  display: flex; align-items: center; justify-content: center;
-  width: 100%; min-height: 184px; padding: var(--espaco-2);
-  background: var(--marca-claro); border-radius: var(--raio-m);
+.pick img {
+  width: auto; height: 150px; max-width: 100%; object-fit: contain;
+  filter: drop-shadow(var(--sombra-cartao));
 }
-.mascot img { max-height: 164px; max-width: 100%; width: auto; height: auto; object-fit: contain; }
-.yearText { display: flex; flex-direction: column; align-items: center; }
-.yearText strong { font-size: 28px; line-height: 34px; font-weight: 900; }
-.yearText span { font-family: var(--font-titulos), system-ui, sans-serif; font-weight: 800; color: var(--tinta-suave); }
+.pick:hover { transform: translateY(-6px); }
+.pickLabel {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 100%; padding: var(--espaco-1) var(--espaco-2);
+  background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-m);
+  box-shadow: var(--sombra-cartao);
+}
+.pickLabel strong { font-size: 22px; line-height: 28px; font-weight: 900; white-space: nowrap; }
+.pickLabel span { font-family: var(--font-titulos), system-ui, sans-serif; font-size: 16px; line-height: 22px; font-weight: 800; color: var(--tinta-suave); }
+.pick:hover .pickLabel { border-color: var(--marca); }
 
 /* Página de ano */
 .back { margin: var(--espaco-4) 0 var(--espaco-3); }
@@ -125,7 +134,6 @@
 
 
 @media (max-width: 920px) {
-  .years { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bar { grid-template-columns: 1fr auto; grid-template-areas: "marca prof" "frase frase"; row-gap: var(--espaco-1); }
   .tagline { padding-left: 0; border-left: 0; }
 }
@@ -133,23 +141,18 @@
   .wrap { padding: 0 var(--espaco-3); }
   .brand { font-size: 24px; }
   .teacher { font-size: 16px; }
-  /* Título por cima da faixa, que aparece inteira (sem cortes). */
-  .hero { margin: var(--espaco-3) 0 var(--espaco-4); }
-  .hero h1 { position: static; padding: 0 0 var(--espaco-3); font-size: 28px; line-height: 34px; }
-  .heroArt { height: auto; aspect-ratio: 3 / 1; border-radius: var(--raio-m); }
-  /* Anos em lista: mascote à esquerda, texto à direita. */
-  .years { grid-template-columns: 1fr; gap: var(--espaco-2); }
-  .yearCard { flex-direction: row; gap: var(--espaco-3); padding: var(--espaco-2); }
-  .mascot { flex: none; width: 96px; min-height: 96px; padding: var(--espaco-1); }
-  .mascot img { max-height: 88px; }
-  .yearText { align-items: flex-start; }
-  .yearText strong { font-size: 24px; line-height: 30px; }
+  .hero { height: 380px; margin-top: var(--espaco-3); border-radius: var(--raio-m); }
+  .hero h1 { padding-top: var(--espaco-4); font-size: 26px; line-height: 32px; }
+  .scene { padding: 0 var(--espaco-2) var(--espaco-3); gap: var(--espaco-1); }
+  .pick img { height: 124px; }
+  .pickLabel { padding: var(--espaco-1); }
+  .pickLabel strong { font-size: 17px; line-height: 22px; }
   .heading { padding: var(--espaco-3); gap: var(--espaco-3); margin-bottom: var(--espaco-4); }
   .heading img { max-height: 84px; max-width: 76px; }
   .subjects { grid-template-columns: 1fr; }
   .subject { padding: var(--espaco-3); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .yearCard { transition: none; }
-  .yearCard:hover { transform: none; }
+  .pick { transition: none; }
+  .pick:hover { transform: none; }
 }

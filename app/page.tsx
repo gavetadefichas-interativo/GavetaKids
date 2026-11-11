@@ -11,25 +11,25 @@ export default function Entrada() {
     <main className={styles.site}>
       <div className={styles.wrap}>
         <Cabecalho />
-        <header className={styles.hero}>
-          <h1>Olá! Escolhe o teu ano</h1>
+        <section className={styles.hero} aria-labelledby="titulo-inicio">
           <div className={styles.heroArt}>
             <Image src={faixa} alt="" priority sizes="(max-width: 1120px) 100vw, 1120px" />
           </div>
-        </header>
-        <ul className={styles.years}>
-          {anos.map((a) => (
-            <li key={a.numero}>
-              <Link href={`/ano/${a.numero}/`} className={styles.yearCard}>
-                <span className={styles.mascot}><Image src={a.imagem} alt="" priority={a.numero === 1} /></span>
-                <span className={styles.yearText}>
-                  <strong>{a.rotulo}</strong>
-                  <span>{a.mascote}</span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+          <h1 id="titulo-inicio">Olá! Escolhe o teu ano</h1>
+          <ul className={styles.scene}>
+            {anos.map((a) => (
+              <li key={a.numero}>
+                <Link href={`/ano/${a.numero}/`} className={styles.pick}>
+                  <Image src={a.imagem} alt="" priority />
+                  <span className={styles.pickLabel}>
+                    <strong>{a.rotulo}</strong>
+                    <span>{a.mascote}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
         <Rodape />
       </div>
     </main>
