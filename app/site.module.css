@@ -63,9 +63,14 @@
 .pxAzul { background: var(--tic); }
 .pxClaro { background: var(--tic-claro); outline: 1px solid var(--linha); }
 .pxLaranja { background: var(--acento); }
+.heroIntro { display: grid; justify-items: center; gap: var(--espaco-2); padding: 0 var(--espaco-3); }
 .hero h1 {
-  margin: 0; padding: 0 var(--espaco-3);
+  margin: 0;
   text-align: center; font-size: clamp(28px, 4.5vw, 44px); line-height: 1.15; font-weight: 900;
+}
+.heroIntro p {
+  margin: 0; max-width: 36rem; text-align: center;
+  font-size: 18px; line-height: 1.45; color: var(--tinta-suave);
 }
 
 .scene {
@@ -90,20 +95,32 @@
 .pickArt img {
   width: auto; height: 160px; max-width: 100%; object-fit: contain;
   filter: drop-shadow(var(--sombra-cartao));
-  animation: flutuar 3.2s ease-in-out infinite;
+  transition: transform .2s ease-out;
 }
-li:nth-child(1) .pickArt img { animation-delay: 0s; }
-li:nth-child(2) .pickArt img { animation-delay: .4s; }
-li:nth-child(3) .pickArt img { animation-delay: .8s; }
-li:nth-child(4) .pickArt img { animation-delay: 1.2s; }
-@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.pick:hover .pickArt img, .pick:focus-visible .pickArt img { animation: saltar .5s ease-out; }
-@keyframes saltar { 0% { transform: translateY(0); } 40% { transform: translateY(-14px); } 100% { transform: translateY(0); } }
+.pick:hover .pickArt img, .pick:focus-visible .pickArt img {
+  transform: translateY(-8px) rotate(-2deg);
+}
 
 .pickName {
   font-family: var(--font-titulos), system-ui, sans-serif;
   font-size: 18px; line-height: 24px; font-weight: 800; color: var(--ano-cor-texto);
 }
+/* Uma pequena personalidade por mascote, sem esconder o nome nem o ano. */
+.pickMessage {
+  display: grid; place-items: center;
+  min-height: 24px; width: 100%;
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-size: 16px; line-height: 24px; font-weight: 700;
+  color: var(--tinta-suave); text-align: center;
+}
+.pickRole, .pickGreeting { grid-area: 1 / 1; }
+.pickGreeting { opacity: 0; color: var(--ano-cor-texto); }
+@media (hover: hover) and (pointer: fine) {
+  .pick:hover .pickRole { opacity: 0; }
+  .pick:hover .pickGreeting { opacity: 1; }
+}
+.pick:focus-visible .pickRole { opacity: 0; }
+.pick:focus-visible .pickGreeting { opacity: 1; }
 /* Botão: mostra claramente onde tocar. */
 .pickButton {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--espaco-2);
@@ -178,6 +195,7 @@ li:nth-child(4) .pickArt img { animation-delay: 1.2s; }
   .teacher { font-size: 16px; }
   .hero { margin-top: var(--espaco-3); padding-top: var(--espaco-6); gap: var(--espaco-4); border-radius: var(--raio-m); }
   .hero h1 { font-size: 26px; line-height: 32px; }
+  .heroIntro p { font-size: 16px; line-height: 24px; }
   .hero::before { bottom: -18%; height: 45%; width: 110%; }
   .hero::after { bottom: -22%; height: 45%; width: 120%; }
   .scene { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--espaco-4); padding: 0 var(--espaco-3) var(--espaco-5); }
@@ -191,7 +209,8 @@ li:nth-child(4) .pickArt img { animation-delay: 1.2s; }
   .subject { padding: var(--espaco-3); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pickArt img, .pick:hover .pickArt img, .pick:focus-visible .pickArt img { animation: none; }
+  .pickArt img { transition: none; }
+  .pick:hover .pickArt img, .pick:focus-visible .pickArt img { transform: none; }
   .pickButton { transition: none; }
   .pick:hover .pickButton, .pick:focus-visible .pickButton { transform: none; }
 }
