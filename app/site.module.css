@@ -23,12 +23,12 @@
   font-weight: 900; font-size: 28px; line-height: 32px;
   color: var(--tinta); text-decoration: none;
 }
-.brand span { color: var(--marca); }
+.brand span { color: var(--marca-texto); }
 .teacher, .back {
   display: inline-flex; align-items: center; gap: var(--espaco-2);
   min-height: var(--alvo-toque); padding: 0 var(--espaco-3);
   background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-m);
-  color: var(--marca); text-decoration: none;
+  color: var(--marca-texto); text-decoration: none;
   font-family: var(--font-titulos), system-ui, sans-serif; font-weight: 800; font-size: 18px;
 }
 
