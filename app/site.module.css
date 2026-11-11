@@ -76,17 +76,43 @@
 .pick {
   display: flex; flex-direction: column; align-items: center; gap: var(--espaco-2);
   color: var(--tinta); text-decoration: none; border-radius: var(--raio-m);
-  transition: transform .15s;
 }
-.pick img {
-  width: auto; height: 150px; max-width: 100%; object-fit: contain;
+/* Círculo na cor do ano por trás da mascote. */
+.pickArt {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  width: 100%; height: 170px;
+}
+.pickArt::before {
+  content: ""; position: absolute; z-index: -1; bottom: 6%; left: 50%;
+  width: min(150px, 92%); aspect-ratio: 1; transform: translateX(-50%);
+  border-radius: 50%; background: var(--ano-claro); border: 3px solid var(--ano);
+}
+.pickArt img {
+  width: auto; height: 160px; max-width: 100%; object-fit: contain;
   filter: drop-shadow(var(--sombra-cartao));
+  animation: flutuar 3.2s ease-in-out infinite;
 }
-.pick:hover { transform: translateY(-6px); }
-.pickLabel { display: flex; flex-direction: column; align-items: center; }
-.pickLabel strong { font-size: 24px; line-height: 30px; font-weight: 900; white-space: nowrap; }
-.pickLabel span { font-family: var(--font-titulos), system-ui, sans-serif; font-size: 16px; line-height: 22px; font-weight: 800; color: var(--tinta-suave); }
-.pick:hover .pickLabel strong { text-decoration: underline; text-underline-offset: 4px; }
+li:nth-child(1) .pickArt img { animation-delay: 0s; }
+li:nth-child(2) .pickArt img { animation-delay: .4s; }
+li:nth-child(3) .pickArt img { animation-delay: .8s; }
+li:nth-child(4) .pickArt img { animation-delay: 1.2s; }
+@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.pick:hover .pickArt img, .pick:focus-visible .pickArt img { animation: saltar .5s ease-out; }
+@keyframes saltar { 0% { transform: translateY(0); } 40% { transform: translateY(-14px); } 100% { transform: translateY(0); } }
+
+.pickName {
+  font-family: var(--font-titulos), system-ui, sans-serif;
+  font-size: 18px; line-height: 24px; font-weight: 800; color: var(--ano-cor-texto);
+}
+/* Botão: mostra claramente onde tocar. */
+.pickButton {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--espaco-2);
+  min-height: var(--alvo-toque); padding: 0 var(--espaco-4);
+  background: var(--ano); color: var(--ano-texto); border-radius: 999px;
+  font-family: var(--font-titulos), system-ui, sans-serif; font-size: 22px; font-weight: 900; white-space: nowrap;
+  box-shadow: var(--sombra-cartao); transition: transform .15s;
+}
+.pick:hover .pickButton, .pick:focus-visible .pickButton { transform: scale(1.06); }
 
 /* Página de ano */
 .back { margin: var(--espaco-4) 0 var(--espaco-3); }
@@ -155,16 +181,19 @@
   .hero::before { bottom: -18%; height: 45%; width: 110%; }
   .hero::after { bottom: -22%; height: 45%; width: 120%; }
   .scene { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--espaco-4); padding: 0 var(--espaco-3) var(--espaco-5); }
-  .pick img { height: 136px; }
-  .pickLabel strong { font-size: 20px; line-height: 26px; }
+  .pickArt { height: 140px; }
+  .pickArt img { height: 132px; }
+  .pickArt::before { width: min(124px, 92%); }
+  .pickButton { font-size: 20px; padding: 0 var(--espaco-3); }
   .heading { padding: var(--espaco-3); gap: var(--espaco-3); margin-bottom: var(--espaco-4); }
   .heading img { max-height: 84px; max-width: 76px; }
   .subjects { grid-template-columns: 1fr; }
   .subject { padding: var(--espaco-3); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pick { transition: none; }
-  .pick:hover { transform: none; }
+  .pickArt img, .pick:hover .pickArt img, .pick:focus-visible .pickArt img { animation: none; }
+  .pickButton { transition: none; }
+  .pick:hover .pickButton, .pick:focus-visible .pickButton { transform: none; }
 }
 
 /* Dispositivos mais estreitos: cartões de jogos mais compactos. */
