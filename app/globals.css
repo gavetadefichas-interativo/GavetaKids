@@ -50,121 +50,6 @@ a { color: inherit; }
   text-decoration: none;
 }
 
-.cabecalho { margin: var(--espaco-5) 0 var(--espaco-5); }
-.cabecalho p { margin: var(--espaco-2) 0 0; color: var(--tinta-suave); }
-
-/* Escolha do ano */
-.grelha-anos {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--espaco-4);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-
-.cartao-ano {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: var(--alvo-toque);
-  background: var(--superficie);
-  border-radius: var(--raio-g);
-  box-shadow: var(--sombra-cartao);
-  text-decoration: none;
-  overflow: hidden;
-  transition: transform 120ms ease;
-}
-.cartao-ano:hover { transform: translateY(-4px); }
-.cartao-ano:active { transform: translateY(0); }
-
-.cartao-ano .faixa {
-  background: var(--ano);
-  color: var(--ano-texto);
-  padding: var(--espaco-2) var(--espaco-4);
-}
-
-.cartao-ano .figura {
-  background: var(--ano-claro);
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: var(--espaco-4) var(--espaco-4) var(--espaco-2);
-}
-.cartao-ano .figura img { width: auto; height: 180px; }
-
-.cartao-ano .texto { padding: var(--espaco-3) var(--espaco-4) var(--espaco-4); }
-.cartao-ano .texto h2 { color: var(--ano-cor-texto); }
-.cartao-ano .texto p { margin: var(--espaco-1) 0 0; color: var(--tinta-suave); font-size: 16px; line-height: 22px; }
-
-/* Página de um ano */
-.topo-ano {
-  background: var(--ano-claro);
-  border-radius: var(--raio-g);
-  padding: var(--espaco-4);
-  display: flex;
-  align-items: center;
-  gap: var(--espaco-4);
-  margin: var(--espaco-4) 0 var(--espaco-5);
-}
-.topo-ano img { width: auto; height: 160px; flex: none; }
-.topo-ano .rotulo {
-  display: inline-block;
-  background: var(--ano);
-  color: var(--ano-texto);
-  border-radius: var(--raio-total);
-  padding: var(--espaco-1) var(--espaco-3);
-}
-.topo-ano h1 { margin-top: var(--espaco-2); }
-.topo-ano p { margin: var(--espaco-2) 0 0; }
-@media (max-width: 560px) {
-  .topo-ano { flex-direction: column; text-align: center; }
-  .topo-ano .titulo-1 { font-size: 36px; line-height: 40px; }
-}
-
-.grelha-disciplinas {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--espaco-3);
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-.disciplina {
-  min-height: calc(var(--alvo-toque) * 2);
-  background: var(--superficie);
-  border: 2px solid var(--linha);
-  border-radius: var(--raio-g);
-  padding: var(--espaco-4);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--espaco-2);
-}
-.disciplina .estado { color: var(--tinta-suave); }
-.disciplina { justify-content: flex-start; }
-
-.lista-jogos { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--espaco-2); }
-.jogo {
-  display: block;
-  min-height: var(--alvo-toque);
-  padding: var(--espaco-2) var(--espaco-3);
-  border-radius: var(--raio-m);
-  background: var(--ano-claro);
-  text-decoration: none;
-  box-shadow: var(--sombra-botao);
-}
-.jogo:active { transform: translateY(4px); box-shadow: none; }
-.jogo .nome {
-  display: block;
-  font-family: var(--font-titulos), system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 24px;
-  color: var(--ano-cor-texto);
-}
-.jogo .descricao { display: block; margin-top: var(--espaco-1); font-size: 16px; line-height: 22px; color: var(--tinta-suave); }
-
 /* Botões */
 .botao {
   display: inline-flex;
@@ -188,25 +73,12 @@ a { color: inherit; }
 
 .rodape {
   margin-top: var(--espaco-6);
+  padding: var(--espaco-4) 0;
+  border-top: 1px solid var(--linha);
+  text-align: center;
   color: var(--tinta-suave);
-  font-size: 16px;
-  line-height: 22px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cartao-ano, .cartao-ano:hover { transition: none; transform: none; }
-}
-
-/* Ligação discreta para o Espaço do Professor, na barra de cima da entrada */
-.barra-topo { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); }
-.ligacao-professores {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--alvo-toque);
-  padding: 0 var(--espaco-2);
   font-family: var(--font-titulos), system-ui, sans-serif;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 22px;
   font-weight: 700;
-  color: var(--tinta-suave);
 }

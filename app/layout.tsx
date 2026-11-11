@@ -23,12 +23,12 @@ const andika = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Gaveta Kids",
+  title: "GavetaKids",
   description: "Ferramentas interativas para o 1.º ciclo, da Gaveta de Fichas.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFF8F0",
+  themeColor: "#F7F9FD",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

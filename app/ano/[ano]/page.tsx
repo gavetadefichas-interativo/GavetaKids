@@ -1,9 +1,11 @@
 import Image from "next/image";
-import Rodape from "@/app/rodape";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Rodape from "@/app/rodape";
+import { IconeDisciplina } from "@/app/icones";
 import { anos, disciplinas, obterAno } from "@/lib/anos";
 import { enderecoJogo, jogosDe } from "@/lib/jogos";
+import styles from "@/app/site.module.css";
 
 export const dynamicParams = false;
 
@@ -12,56 +14,57 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ ano: string }> }) {
-  const ano = obterAno((await params).ano);
-  return { title: ano ? `${ano.rotulo} · Gaveta Kids` : "Gaveta Kids" };
+  const a = obterAno((await params).ano);
+  return { title: a ? `${a.rotulo} · GavetaKids` : "GavetaKids" };
 }
 
+const temas = { "Português": "pt", "Matemática": "mat", "Estudo do Meio": "em", "TIC": "tic" } as const;
+
 export default async function PaginaAno({ params }: { params: Promise<{ ano: string }> }) {
-  const ano = obterAno((await params).ano);
-  if (!ano) notFound();
+  const a = obterAno((await params).ano);
+  if (!a) notFound();
 
   return (
-    <main className={`pagina ${ano.tema}`}>
-      <Link href="/" className="botao">
-        <span aria-hidden="true">←</span> Voltar
-      </Link>
-
-      <header className="topo-ano">
-        <Image src={ano.imagem} alt={`${ano.mascote}, a mascote do ${ano.rotulo}`} priority />
-        <div>
-          <span className="rotulo etiqueta">{ano.rotulo}</span>
-          <h1 className="titulo-1">Olá! Eu sou o {ano.mascote}</h1>
-          <p>{ano.frase}</p>
-        </div>
-      </header>
-
-      <h2 className="titulo-2">O que queres fazer hoje?</h2>
-      <ul className="grelha-disciplinas" style={{ marginTop: "var(--espaco-4)" }}>
-        {disciplinas.map((d) => {
-          const lista = jogosDe(ano.numero, d);
-          return (
-            <li key={d} className="disciplina">
-              <h3 className="titulo-3">{d}</h3>
-              {lista.length === 0 ? (
-                <span className="estado etiqueta">Em breve</span>
-              ) : (
-                <ul className="lista-jogos">
-                  {lista.map((j) => (
-                    <li key={j.pasta}>
-                      <a href={enderecoJogo(j)} className="jogo">
-                        <span className="nome">{j.titulo}</span>
-                        <span className="descricao">{j.descricao}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-
-      <Rodape />
+    <main className={styles.site}>
+      <div className={styles.wrap}>
+        <nav className={styles.bar}>
+          <Link href="/" className={styles.brand} aria-label="GavetaKids, início">Gaveta<span>Kids</span></Link>
+          <Link href="/professores/" className={styles.teacher}>Professores</Link>
+        </nav>
+        <Link className={styles.back} href="/"><span aria-hidden="true">←</span> Voltar aos anos</Link>
+        <header className={styles.heading}>
+          <Image src={a.imagem} alt={`${a.mascote}, mascote do ${a.rotulo}`} priority />
+          <h1>{a.rotulo} · {a.mascote}</h1>
+        </header>
+        <ul className={styles.subjects}>
+          {disciplinas.map((d) => {
+            const jogos = jogosDe(a.numero, d);
+            return (
+              <li key={d} className={`${styles.subject} ${styles[temas[d]]} ${jogos.length ? "" : styles.empty}`}>
+                <h2><span className={styles.icon}><IconeDisciplina disciplina={d} /></span>{d}</h2>
+                {jogos.length ? (
+                  <ul className={styles.games}>
+                    {jogos.map((j) => (
+                      <li key={j.pasta}>
+                        <a className={styles.game} href={enderecoJogo(j)}>
+                          {j.miniatura && <Image className={styles.thumb} src={j.miniatura} alt="" />}
+                          <span>
+                            <strong>{j.titulo}</strong>
+                            <span>{j.descricao}</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span className={styles.soon}>Em breve</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+        <Rodape />
+      </div>
     </main>
   );
 }
