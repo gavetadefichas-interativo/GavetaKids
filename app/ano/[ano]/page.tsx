@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Cabecalho from "@/app/cabecalho";
 import Rodape from "@/app/rodape";
 import { IconeDisciplina } from "@/app/icones";
+import MiniaturaJogo from "@/app/miniaturas";
 import { anos, disciplinas, obterAno } from "@/lib/anos";
 import { enderecoJogo, jogosDe } from "@/lib/jogos";
 import styles from "@/app/site.module.css";
@@ -45,7 +46,7 @@ export default async function PaginaAno({ params }: { params: Promise<{ ano: str
                     {jogos.map((j) => (
                       <li key={j.pasta}>
                         <a className={styles.game} href={enderecoJogo(j)}>
-                          {j.miniatura && <Image className={styles.thumb} src={j.miniatura} alt="" />}
+                          {j.miniatura ? <Image className={styles.thumb} src={j.miniatura} alt="" /> : <span className={styles.thumb} aria-hidden="true"><MiniaturaJogo jogo={j.pasta} titulo={j.titulo} /></span>}
                           <span>
                             <strong>{j.titulo}</strong>
                             <span>{j.descricao}</span>
