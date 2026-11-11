@@ -5,36 +5,25 @@ import { anos } from "@/lib/anos";
 
 export default function Entrada() {
   return (
-    <main className="pagina">
+    <main className="pagina pagina-v2">
       <div className="barra-topo">
-        <span className="marca">Gaveta Kids</span>
-        <Link href="/professores/" className="ligacao-professores">
-          Professores
-        </Link>
+        <Link className="marca" href="/" aria-label="GavetaKids — início">Gaveta<span>Kids</span></Link>
+        <Link href="/professores/" className="ligacao-professores">Professores</Link>
       </div>
-
-      <header className="cabecalho">
+      <header className="cabecalho cabecalho-v2">
         <h1 className="titulo-1">Olá! Escolhe o teu ano</h1>
-        <p>Cada ano tem a sua mascote e as suas ferramentas.</p>
       </header>
-
-      <ul className="grelha-anos">
+      <ul className="grelha-anos grelha-anos-v2">
         {anos.map((ano) => (
           <li key={ano.numero}>
-            <Link href={`/ano/${ano.numero}/`} className={`cartao-ano ${ano.tema}`}>
-              <span className="faixa etiqueta">{ano.rotulo}</span>
-              <div className="figura">
-                <Image src={ano.imagem} alt="" priority />
-              </div>
-              <div className="texto">
-                <h2 className="titulo-2">{ano.mascote}</h2>
-                <p>{ano.papel}</p>
-              </div>
+            <Link href={`/ano/${ano.numero}/`} className="cartao-ano cartao-ano-v2">
+              <div className="figura"><Image src={ano.imagem} alt="" priority={ano.numero === 1} /></div>
+              <span className="ano-nome">{ano.rotulo}</span>
+              <span className="mascote-nome">{ano.mascote}</span>
             </Link>
           </li>
         ))}
       </ul>
-
       <Rodape />
     </main>
   );
