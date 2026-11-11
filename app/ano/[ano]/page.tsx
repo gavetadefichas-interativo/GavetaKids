@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Cabecalho from "@/app/cabecalho";
 import Rodape from "@/app/rodape";
 import { IconeDisciplina } from "@/app/icones";
 import { anos, disciplinas, obterAno } from "@/lib/anos";
@@ -27,10 +28,7 @@ export default async function PaginaAno({ params }: { params: Promise<{ ano: str
   return (
     <main className={styles.site}>
       <div className={styles.wrap}>
-        <nav className={styles.bar}>
-          <Link href="/" className={styles.brand} aria-label="GavetaKids, início">Gaveta<span>Kids</span></Link>
-          <Link href="/professores/" className={styles.teacher}>Professores</Link>
-        </nav>
+        <Cabecalho />
         <Link className={styles.back} href="/"><span aria-hidden="true">←</span> Voltar aos anos</Link>
         <header className={styles.heading}>
           <Image src={a.imagem} alt={`${a.mascote}, mascote do ${a.rotulo}`} priority />
