@@ -11,7 +11,8 @@
 .site h1, .site h2, .site strong { font-family: var(--font-titulos), system-ui, sans-serif; }
 .site a:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--espaco-4); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--espaco-4); min-height: 100vh; display: flex; flex-direction: column; }
+.wrap > :last-child { margin-top: auto; }
 
 /* Cabeçalho */
 .bar {
@@ -40,20 +41,31 @@
 }
 
 /* Página inicial */
-/* Cena da página inicial: ilustração de fundo, título no céu e as quatro mascotes
-   no prado. Cada mascote é a ligação para o seu ano. */
+/* Cena da página inicial: céu claro, colinas planas e os píxeis do logótipo,
+   desenhados em CSS (nítidos em qualquer ecrã). As mascotes estão na colina e
+   cada uma leva ao seu ano. */
 .hero {
-  position: relative; overflow: hidden;
-  height: clamp(360px, 36vw, 420px);
-  margin: var(--espaco-4) 0 0;
+  position: relative; overflow: hidden; isolation: isolate;
+  margin: var(--espaco-4) 0 0; padding-top: var(--espaco-6);
   border-radius: var(--raio-g);
-  display: flex; flex-direction: column; justify-content: space-between;
+  background: linear-gradient(180deg, var(--marca-claro) 0%, var(--superficie) 70%);
+  border: 1px solid var(--linha);
+  display: flex; flex-direction: column; gap: var(--espaco-5);
 }
-.heroArt { position: absolute; inset: 0; }
-.heroArt img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+/* Colinas */
+.hero::before, .hero::after {
+  content: ""; position: absolute; z-index: -1; border-radius: 50%;
+}
+.hero::before { left: -20%; width: 80%; bottom: -55%; height: 95%; background: var(--verde-claro); }
+.hero::after { right: -25%; width: 95%; bottom: -60%; height: 95%; background: var(--em-claro); }
+.pixels { position: absolute; inset: 0; z-index: -1; }
+.pixels i { position: absolute; border-radius: 2px; }
+.pxAzul { background: var(--tic); }
+.pxClaro { background: var(--tic-claro); outline: 1px solid var(--linha); }
+.pxLaranja { background: var(--acento); }
 .hero h1 {
-  position: relative; margin: 0; padding: var(--espaco-5) var(--espaco-3) 0;
-  text-align: center; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.15; font-weight: 900;
+  margin: 0; padding: 0 var(--espaco-3);
+  text-align: center; font-size: clamp(28px, 4.5vw, 44px); line-height: 1.15; font-weight: 900;
 }
 
 .scene {
@@ -71,15 +83,10 @@
   filter: drop-shadow(var(--sombra-cartao));
 }
 .pick:hover { transform: translateY(-6px); }
-.pickLabel {
-  display: flex; flex-direction: column; align-items: center;
-  min-width: 100%; padding: var(--espaco-1) var(--espaco-2);
-  background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-m);
-  box-shadow: var(--sombra-cartao);
-}
-.pickLabel strong { font-size: 22px; line-height: 28px; font-weight: 900; white-space: nowrap; }
+.pickLabel { display: flex; flex-direction: column; align-items: center; }
+.pickLabel strong { font-size: 24px; line-height: 30px; font-weight: 900; white-space: nowrap; }
 .pickLabel span { font-family: var(--font-titulos), system-ui, sans-serif; font-size: 16px; line-height: 22px; font-weight: 800; color: var(--tinta-suave); }
-.pick:hover .pickLabel { border-color: var(--marca); }
+.pick:hover .pickLabel strong { text-decoration: underline; text-underline-offset: 4px; }
 
 /* Página de ano */
 .back { margin: var(--espaco-4) 0 var(--espaco-3); }
@@ -143,12 +150,13 @@
   .wrap { padding: 0 var(--espaco-3); }
   .brand { font-size: 24px; }
   .teacher { font-size: 16px; }
-  .hero { height: 380px; margin-top: var(--espaco-3); border-radius: var(--raio-m); }
-  .hero h1 { padding-top: var(--espaco-4); font-size: 26px; line-height: 32px; }
-  .scene { padding: 0 var(--espaco-2) var(--espaco-3); gap: var(--espaco-1); }
-  .pick img { height: 112px; }
-  .pickLabel { padding: var(--espaco-1); }
-  .pickLabel strong { font-size: 17px; line-height: 22px; }
+  .hero { margin-top: var(--espaco-3); padding-top: var(--espaco-6); gap: var(--espaco-4); border-radius: var(--raio-m); }
+  .hero h1 { font-size: 26px; line-height: 32px; }
+  .hero::before { bottom: -18%; height: 45%; width: 110%; }
+  .hero::after { bottom: -22%; height: 45%; width: 120%; }
+  .scene { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--espaco-4); padding: 0 var(--espaco-3) var(--espaco-5); }
+  .pick img { height: 136px; }
+  .pickLabel strong { font-size: 20px; line-height: 26px; }
   .heading { padding: var(--espaco-3); gap: var(--espaco-3); margin-bottom: var(--espaco-4); }
   .heading img { max-height: 84px; max-width: 76px; }
   .subjects { grid-template-columns: 1fr; }
@@ -159,15 +167,8 @@
   .pick:hover { transform: none; }
 }
 
-/* Dispositivos mais estreitos: evitar que as etiquetas das mascotes se sobreponham. */
+/* Dispositivos mais estreitos: cartões de jogos mais compactos. */
 @media (max-width: 420px) {
-  .hero { height: 342px; }
-  .scene { gap: 2px; padding-inline: 4px; }
-  .pick { gap: 6px; min-width: 0; }
-  .pick img { height: 100px; }
-  .pickLabel { min-width: 0; width: 100%; padding: 4px 2px; }
-  .pickLabel strong { font-size: 15px; line-height: 20px; }
-  .pickLabel span { font-size: 13px; line-height: 18px; }
   .thumb { width: 90px; height: 68px; }
   .game { gap: var(--espaco-2); padding: var(--espaco-2); }
 }
