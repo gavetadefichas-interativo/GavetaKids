@@ -22,13 +22,20 @@ export default function Entrada() {
               <i key={i} className={styles[c]} style={{ left: `${x}%`, top: `${y}%`, width: t, height: t }} />
             ))}
           </span>
-          <h1 id="titulo-inicio">Olá! Escolhe o teu ano</h1>
+          <div className={styles.heroIntro}>
+            <h1 id="titulo-inicio">Pronto para uma nova descoberta?</h1>
+            <p>Escolhe o teu ano e começa a explorar com a tua mascote!</p>
+          </div>
           <ul className={styles.scene}>
             {anos.map((a) => (
               <li key={a.numero}>
                 <Link href={`/ano/${a.numero}/`} className={`${styles.pick} ${a.tema}`}>
                   <span className={styles.pickArt}><Image src={a.imagem} alt="" priority /></span>
                   <span className={styles.pickName}>{a.mascote}</span>
+                  <span className={styles.pickMessage}>
+                    <span className={styles.pickRole}>{a.papel}</span>
+                    <span className={styles.pickGreeting} aria-hidden="true">{["Vamos descobrir!", "Vamos inventar!", "Vamos resolver!", "Vamos inovar!"][a.numero - 1]}</span>
+                  </span>
                   <span className={styles.pickButton}>{a.rotulo} <span aria-hidden="true">→</span></span>
                 </Link>
               </li>
