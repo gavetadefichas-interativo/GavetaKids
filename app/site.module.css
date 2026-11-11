@@ -1,22 +1,22 @@
-/* Pré-visualização GavetaKids 2.0. Só variáveis de tokens.css (design/tokens.json). */
+/* Página inicial e páginas de ano (identidade 2.0). Só variáveis de tokens.css (design/tokens.json). */
 
-.preview {
+.site {
   min-height: 100vh;
-  background: var(--fundo-frio);
+  background: var(--fundo);
   color: var(--tinta);
   font-family: var(--font-leitura), system-ui, sans-serif;
   font-size: 20px;
   line-height: 30px;
 }
-.preview h1, .preview h2, .preview strong { font-family: var(--font-titulos), system-ui, sans-serif; }
-.preview a:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; }
+.site h1, .site h2, .site strong { font-family: var(--font-titulos), system-ui, sans-serif; }
+.site a:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; }
 
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--espaco-4); }
 
 /* Cabeçalho */
 .bar {
   display: flex; justify-content: space-between; align-items: center; gap: var(--espaco-3);
-  padding: var(--espaco-3) 0; border-bottom: 1px solid var(--linha-fria);
+  padding: var(--espaco-3) 0; border-bottom: 1px solid var(--linha);
 }
 .brand {
   font-family: var(--font-titulos), system-ui, sans-serif;
@@ -27,7 +27,7 @@
 .teacher, .back {
   display: inline-flex; align-items: center; gap: var(--espaco-2);
   min-height: var(--alvo-toque); padding: 0 var(--espaco-3);
-  background: var(--superficie); border: 1px solid var(--linha-fria); border-radius: var(--raio-m);
+  background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-m);
   color: var(--marca); text-decoration: none;
   font-family: var(--font-titulos), system-ui, sans-serif; font-weight: 800; font-size: 18px;
 }
@@ -38,12 +38,12 @@
 
 .years {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--espaco-3);
-  list-style: none; padding: 0; margin: 0 0 var(--espaco-6);
+  list-style: none; padding: 0; margin: 0;
 }
 .yearCard {
   display: flex; flex-direction: column; align-items: center; gap: var(--espaco-2);
   padding: var(--espaco-3) var(--espaco-3) var(--espaco-4);
-  background: var(--superficie); border: 1px solid var(--linha-fria); border-radius: var(--raio-g);
+  background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-g);
   box-shadow: var(--sombra-cartao); color: var(--tinta); text-decoration: none;
   transition: transform .15s, border-color .15s;
 }
@@ -69,7 +69,7 @@
 
 .subjects {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espaco-3);
-  list-style: none; padding: 0; margin: 0 0 var(--espaco-6);
+  list-style: none; padding: 0; margin: 0;
 }
 .pt  { --cor: var(--pt);  --cor-texto: var(--pt-texto);  --cor-claro: var(--pt-claro); }
 .mat { --cor: var(--mat); --cor-texto: var(--mat-texto); --cor-claro: var(--mat-claro); }
@@ -78,7 +78,7 @@
 
 .subject {
   min-width: 0; padding: var(--espaco-4);
-  background: var(--superficie); border: 1px solid var(--linha-fria); border-top: 6px solid var(--cor);
+  background: var(--superficie); border: 1px solid var(--linha); border-top: 6px solid var(--cor);
   border-radius: var(--raio-g); box-shadow: var(--sombra-cartao);
 }
 .subject h2 {
@@ -95,7 +95,7 @@
 .game {
   display: flex; align-items: center; gap: var(--espaco-3);
   min-height: var(--alvo-toque); padding: var(--espaco-3);
-  background: var(--superficie); border: 1px solid var(--linha-fria); border-radius: var(--raio-m);
+  background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-m);
   color: var(--tinta); text-decoration: none;
 }
 .game:hover { border-color: var(--cor-texto); }
@@ -107,12 +107,6 @@
 .empty { background: transparent; box-shadow: none; border-style: dashed; border-top-style: solid; }
 .soon { font-family: var(--font-titulos), system-ui, sans-serif; font-size: 16px; font-weight: 700; color: var(--tinta-suave); }
 
-.footer {
-  padding: var(--espaco-4) 0; border-top: 1px solid var(--linha-fria);
-  text-align: center; color: var(--tinta-suave);
-  font-family: var(--font-titulos), system-ui, sans-serif; font-size: 16px; font-weight: 700;
-}
-.footer a { color: inherit; }
 
 @media (max-width: 920px) { .years { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) {

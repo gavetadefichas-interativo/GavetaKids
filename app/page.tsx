@@ -1,41 +1,31 @@
 import Image from "next/image";
-import Rodape from "@/app/rodape";
 import Link from "next/link";
+import Rodape from "./rodape";
 import { anos } from "@/lib/anos";
+import styles from "./site.module.css";
 
 export default function Entrada() {
   return (
-    <main className="pagina">
-      <div className="barra-topo">
-        <span className="marca">Gaveta Kids</span>
-        <Link href="/professores/" className="ligacao-professores">
-          Professores
-        </Link>
+    <main className={styles.site}>
+      <div className={styles.wrap}>
+        <nav className={styles.bar}>
+          <Link className={styles.brand} href="/" aria-label="GavetaKids, início">Gaveta<span>Kids</span></Link>
+          <Link className={styles.teacher} href="/professores/">Professores</Link>
+        </nav>
+        <header className={styles.intro}><h1>Olá! Escolhe o teu ano</h1></header>
+        <ul className={styles.years}>
+          {anos.map((a) => (
+            <li key={a.numero}>
+              <Link href={`/ano/${a.numero}/`} className={styles.yearCard}>
+                <span className={styles.mascot}><Image src={a.imagem} alt="" priority={a.numero === 1} /></span>
+                <strong>{a.rotulo}</strong>
+                <span>{a.mascote}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <Rodape />
       </div>
-
-      <header className="cabecalho">
-        <h1 className="titulo-1">Olá! Escolhe o teu ano</h1>
-        <p>Cada ano tem a sua mascote e as suas ferramentas.</p>
-      </header>
-
-      <ul className="grelha-anos">
-        {anos.map((ano) => (
-          <li key={ano.numero}>
-            <Link href={`/ano/${ano.numero}/`} className={`cartao-ano ${ano.tema}`}>
-              <span className="faixa etiqueta">{ano.rotulo}</span>
-              <div className="figura">
-                <Image src={ano.imagem} alt="" priority />
-              </div>
-              <div className="texto">
-                <h2 className="titulo-2">{ano.mascote}</h2>
-                <p>{ano.papel}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      <Rodape />
     </main>
   );
 }
