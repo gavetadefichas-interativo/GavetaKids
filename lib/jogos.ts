@@ -1,3 +1,4 @@
+import type { StaticImageData } from "next/image";
 import type { disciplinas } from "@/lib/anos";
 
 export type Disciplina = (typeof disciplinas)[number];
@@ -9,6 +10,8 @@ export type Jogo = {
   descricao: string;
   ano: 1 | 2 | 3 | 4;
   disciplinas: Disciplina[];
+  /** Miniatura própria do jogo (imagem em assets/miniaturas/, proporção 4:3). Opcional. */
+  miniatura?: StaticImageData;
 };
 
 // Jogos já criados para a Gaveta de Fichas, tal como foram publicados.
