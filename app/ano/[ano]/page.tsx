@@ -31,9 +31,14 @@ export default async function PaginaAno({ params }: { params: Promise<{ ano: str
       <div className={styles.wrap}>
         <Cabecalho />
         <Link className={styles.back} href="/"><span aria-hidden="true">←</span> Voltar aos anos</Link>
-        <header className={styles.heading}>
+        <header className={`${styles.heading} ${a.tema}`}>
           <Image src={a.imagem} alt={`${a.mascote}, mascote do ${a.rotulo}`} priority />
-          <h1>{a.rotulo} · {a.mascote}</h1>
+          <div className={styles.headingText}>
+            <span className={styles.headingRole}>{a.papel}</span>
+            <h1>{a.rotulo} · {a.mascote}</h1>
+            <p>{a.frase}</p>
+            <p className={styles.headingHint}>Escolhe uma disciplina para começares.</p>
+          </div>
         </header>
         <ul className={styles.subjects}>
           {disciplinas.map((d) => {
@@ -45,18 +50,19 @@ export default async function PaginaAno({ params }: { params: Promise<{ ano: str
                   <ul className={styles.games}>
                     {jogos.map((j) => (
                       <li key={j.pasta}>
-                        <a className={styles.game} href={enderecoJogo(j)}>
+                        <a className={styles.game} href={enderecoJogo(j)} aria-label={`Abrir atividade: ${j.titulo}`}>
                           {j.miniatura ? <Image className={styles.thumb} src={j.miniatura} alt="" /> : <span className={styles.thumb} aria-hidden="true"><MiniaturaJogo jogo={j.pasta} titulo={j.titulo} /></span>}
                           <span>
                             <strong>{j.titulo}</strong>
                             <span>{j.descricao}</span>
                           </span>
+                          <span className={styles.gameArrow} aria-hidden="true">→</span>
                         </a>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <span className={styles.soon}>Em breve</span>
+                  <span className={styles.soon}>Novas atividades a caminho.</span>
                 )}
               </li>
             );
