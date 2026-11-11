@@ -23,8 +23,8 @@ const andika = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "GavetaKids",
-  description: "Ferramentas interativas para o 1.º ciclo, da Gaveta de Fichas.",
+  title: "GavetaKids · Jogos e recursos interativos para o 1.º ciclo",
+  description: "Jogos e recursos interativos para o 1.º ciclo, da Gaveta de Fichas.",
 };
 
 export const viewport: Viewport = {
